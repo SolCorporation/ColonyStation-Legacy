@@ -1,15 +1,11 @@
-## Yogstation codebase
+## Colony Station codebase
 
 [![Build Status](https://travis-ci.org/yogstation13/Yogstation.png)](https://travis-ci.org/yogstation13/Yogstation)  
 [![forinfinityandbyond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](https://www.reddit.com/r/SS13/comments/5oplxp/what_is_the_main_problem_with_byond_as_an_engine/dclbu1a)
 
-[**Website**](https://yogstation.net)
+[**Code**](https://github.com/SolCorporation/ColonyStation)
 
-[**Code**](https://github.com/yogstation13/yogstation)
-
-[**Wiki**](https://wiki.yogstation.net)
-
-[**Discord**](https://discord.gg/0keg6hQH05Ha8OfO)
+[**Discord**](https://discord.gg/uasTHer)
 
  
 ## DOWNLOADING
@@ -35,8 +31,8 @@ compile. This'll take a little while, and if everything's done right you'll get
 a message like this:
 
 ```
-saving yogstation.dmb (DEBUG mode)
-yogstation.dmb - 0 errors, 0 warnings
+saving colony.dmb (DEBUG mode)
+colony.dmb - 0 errors, 0 warnings
 ```
 
 If you see any errors or warnings, something has gone wrong - possibly a corrupt
@@ -94,7 +90,7 @@ https://github.com/tgstation/tgstation-server
 
 ## MAPS
 
-Yogstation currently comes equipped with five maps.
+Colony Station currently comes equipped with one maps.
 
 * [BoxStation (default)](https://wiki.yogstation.net/wiki/Maps#Boxstation_.28YogBox.29)
 * [MetaStation](https://wiki.yogstation.net/wiki/Maps#MetaStation_.28YogsMeta.29)

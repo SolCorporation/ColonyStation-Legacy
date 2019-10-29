@@ -14,9 +14,10 @@ Format:
 endmap
 
 map yogstation
+endmap
+
+map colonystation
 	default
-	voteweight 1.5
-	votable
 endmap
 
 map minskystation
@@ -39,14 +40,12 @@ endmap
 
 map yogsmeta
 	minplayers 25
-	votable
 endmap
 
 #map pubbystation
 #endmap
 
 map yogspubby
-	votable
 endmap
 
 #map deltastation
@@ -55,7 +54,6 @@ endmap
 
 map yogsdelta
 	minplayers 50
-	votable
 endmap
 
 map runtimestation

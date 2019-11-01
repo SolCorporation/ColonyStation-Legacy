@@ -73,5 +73,5 @@ matrix:
         - mysql -u root tg_travis_prefixed < SQL/tgstation_schema_prefixed.sql
         - tools/travis/build_bsql.sh
       script:
-        - tools/travis/dm.sh -DTRAVISBUILDING colony.dme || travis_terminate 1
+        - tools/travis/dm.sh -DTRAVISBUILDING colonystation.dme || travis_terminate 1
         - tools/travis/run_server.sh

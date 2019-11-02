@@ -277,7 +277,7 @@
 			return
 		if(lines.len > MUSIC_MAXLINES)
 			return
-		if(length(newline) > MUSIC_MAXLINECHARS)
+		if(lentext(newline) > MUSIC_MAXLINECHARS)
 			newline = copytext(newline, 1, MUSIC_MAXLINECHARS)
 		lines.Add(newline)
 

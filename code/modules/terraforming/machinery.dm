@@ -59,7 +59,7 @@
 	else
 		changeAtmos()
 
-/obj/machinery/terraformer/changeAtmos()
+/obj/machinery/terraformer/proc/changeAtmos()
 	var/current_gas = SSterraforming.atmos.getSpecificAtmos(atmos_goal_gas)
 	if(current_gas > atmos_goal)
 		SSterraforming.updateAtmosphere(list(atmos_goal_gas = -molsPerTick))

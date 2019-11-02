@@ -19,7 +19,7 @@
 
 /obj/machinery/terraformer/ui_interact(mob/user)
 	. = ..()
-	/var/dat = "Terraformer<br><br>"
+	var/dat = "Terraformer<br><br>"
 	if(powered(power_channel))
 		cur_atmos = SSterraforming.atmos.getAtmosString()
 		dat += "Current Atmosphere: [cur_atmos]<br>"

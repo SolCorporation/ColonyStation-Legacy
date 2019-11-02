@@ -1,5 +1,7 @@
 /obj/machinery/terraformer
 	name = "Atmospheric Terraformer"
+	icon = "icons/obj/pda.dmi"
+	icon_state = "pdapainter-broken"
 	desc = "A large, power hungry machine that slowly changes the atmosphere of the terrestrial body it is on."
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50

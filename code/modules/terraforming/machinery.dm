@@ -4,6 +4,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 50
 	active_power_usage = 250
+	circuit = /obj/item/circuitboard/machine/terraformer
 
 	var/atmos_goal = 0 //the goal of said gas, in mols
 	var/atmos_goal_gas = "o2" //what gas it's doing

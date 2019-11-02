@@ -7,12 +7,16 @@
 
 	var/list/atmos_goal = null
 	var/cost_modifier = 10
-	var/list/cur_atmos = SSterraforming.atmos.getAtmos()
+	var/list/cur_atmos = null
+
+/obj/machinery/terraforming/atmospheric/Initialize()
+	. = ..()
+	cur_atmos = SSterraforming.atmos.getAtmos()
 
 /obj/machinery/terraforming/atmospheric/ui_interact(mob/user)
 	. = ..()
 	/var/dat = "Terraformer<br><br>"
-	if(powered)
+	if(powered(power_channel))
 		dat += "Current Atmosphere: [cur_atmos]"
 	user << browse(dat, "window=terraformer")
 	onclose(user, "terraformer")

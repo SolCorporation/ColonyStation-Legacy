@@ -146,7 +146,7 @@
 */
 		ReadString(start)
 			var/buf
-			for(, codepos <= lentex(code), codepos++)//codepos to lentex(code))
+			for(, codepos <= lentext(code), codepos++)//codepos to lentext(code))
 				var/char=copytext(code, codepos, codepos+1)
 				switch(char)
 					if("\\")					//Backslash (\) encountered in string
@@ -183,7 +183,7 @@
 			var/char = copytext(code, codepos, codepos+1)
 			var/buf
 			
-			while(!delim.Find(char) && codepos<=lentex(code))
+			while(!delim.Find(char) && codepos<=lentext(code))
 				buf+=char
 				char=copytext(code, ++codepos, codepos+1)
 			codepos-- //allow main Scan() proc to read the delimiter
@@ -202,7 +202,7 @@
 
 			while(options.symbols.Find(buf+char))
 				buf+=char
-				if(++codepos>lentex(code)) break
+				if(++codepos>lentext(code)) break
 				char=copytext(code, codepos, codepos+1)
 
 			codepos-- //allow main Scan() proc to read the next character
@@ -239,7 +239,7 @@
 */
 		ReadComment()
 			// Remember that we still have that $codepos "pointer" variable to use.
-			var/longeur = lentex(code) // So I don't call for var/code's length every while loop
+			var/longeur = lentext(code) // So I don't call for var/code's length every while loop
 
 			if(copytext(code, codepos, codepos+2) == "//") // If line comment
 				++codepos // Eat the current comment start, halfway

@@ -614,9 +614,9 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 		if(!findtext(buffer,GLOB.is_alphanumeric))
 			continue
 		var/punctbuffer = ""
-		var/cutoff = lentex(buffer)
-		for(var/pos = lentex(buffer), pos >= 0, pos--)
-			var/let = copytext(buffer, pos, (pos + 1) % lentex(buffer))
+		var/cutoff = lentext(buffer)
+		for(var/pos = lentext(buffer), pos >= 0, pos--)
+			var/let = copytext(buffer, pos, (pos + 1) % lentext(buffer))
 			if(findtext(let,GLOB.is_alphanumeric))
 				break
 			if(findtext(let,GLOB.is_punctuation))
@@ -649,7 +649,7 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 			buffer = copytext(buffer, 1, cutoff) + punctbuffer
 		if(!findtext(buffer,GLOB.is_alphanumeric))
 			continue
-		if(!buffer || lentex(buffer) > 280 || lentex(buffer) <= cullshort || buffer in accepted)
+		if(!buffer || lentext(buffer) > 280 || lentext(buffer) <= cullshort || buffer in accepted)
 			continue
 
 		accepted += buffer

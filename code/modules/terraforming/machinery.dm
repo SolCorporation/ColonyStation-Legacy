@@ -17,6 +17,14 @@
 /obj/machinery/terraforming/atmospheric/ui_data(mob/user)
 	var/list/data = list()
 	data["goal"] = atmos_goal
-	data["current"] = SSterraforming.getAtmos()
+	data["current"] = SSterraforming.atmos.getAtmos()
 
 	return data
+
+/obj/machinery/terraforming/atmospheric/ui_act(action, params)
+	if(..())
+		return
+	switch(action)
+		if("set_goal")
+			var/new_goal = params["goal"]
+			atmos_goal = new_goal

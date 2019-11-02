@@ -21,7 +21,7 @@
 
 /obj/machinery/terraformer/ui_interact(mob/user)
 	. = ..()
-	/var/dat = "Terraformer<br><br>"
+	var/dat = "Terraformer<br><br>"
 	if(powered(power_channel))
 		cur_atmos = SSterraforming.atmos.getAtmosString()
 		dat += "Current Atmosphere: [cur_atmos]<br>"
@@ -61,7 +61,7 @@
 	else
 		changeAtmos()
 
-/obj/machinery/terraformer/changeAtmos()
+/obj/machinery/terraformer/proc/changeAtmos()
 	var/current_gas = SSterraforming.atmos.getSpecificAtmos(atmos_goal_gas)
 	if(current_gas > atmos_goal)
 		SSterraforming.updateAtmosphere(list(atmos_goal_gas = -molsPerTick))

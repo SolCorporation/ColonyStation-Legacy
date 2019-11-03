@@ -91,7 +91,7 @@ GLOBAL_LIST_EMPTY(mining_bots)
 	if(!battery.use(powerUsage))
 		stopMining()
 		var/message = "Battery depleted. Operator interaction required."
-			radio.talk_into(src, message, radio_channel)
+		radio.talk_into(src, message, radio_channel)
 		return
 
 	for(var/i = 0, i < oresPerCycle, i++)

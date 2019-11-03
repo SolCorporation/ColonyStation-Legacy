@@ -1,0 +1,30 @@
+
+{{#each data.drones}}
+<ui-display title='{{name}}'>
+  <ui-section label='Drone'>
+    <ui-section candystripe>
+      <div class='content'><b>Current Hold:</b> {{cargoLen}}/{{cargoMax}}</div>
+      <br>
+      <div class='content'><b>Mining Delay:</b> {{mineDelay}} seconds</div>
+      {{#if mineAmount <= 1}}<div class='content'><b>Mining Quantity:</b> {{mineAmount}} ore</div>{{/if}}
+      {{#if mineAmount >= 2 }}<div class='content'><b>Mining Quantity:</b> {{mineAmount}} ores</div>{{/if}}
+      <div class='content'><b>Power Usage:</b> {{powerUsage}} per cycle</div>
+      <br>
+      <div class='content'><b>Installed Upgrades:</b></div>
+      <div class='content'>({{upgradesLen}}/{{upgradesMax}})</div>
+      <br>
+      {{#each upgrades}}
+      <div class='content'>{{upName}}</div>
+      <br>
+      {{/each}}
+      <div class='content'><b>Battery:</b></div>
+      <div class='content'>{{charge}}/{{maxcharge}} ({{chargePercent}}%)</div>
+      <br>
+      <ui-button icon='{{mining ? "stop" : "play"}}'
+      action='toggleMining' params='{"bot": {{botID}}}'>{{mining ? "Stop Mining" : "Begin Mining"}}</ui-button>
+      <ui-button icon='square-o' state='{{mining ? "disabled" : null}}'
+      action='unload' params='{"bot": {{botID}}}'>Unload</ui-button>
+    </ui-section>
+  </ui-section>
+</ui-display>
+{{/each}}

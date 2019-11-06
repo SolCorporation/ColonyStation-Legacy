@@ -1,73 +1,85 @@
 /obj/machinery/terraformer
 	name = "Atmospheric Terraformer"
 	icon = 'icons/obj/pda.dmi'
-	icon_state = "pdapainter-broken"
+	icon_state = "pdapainter"
 	desc = "A large, power hungry machine that slowly changes the atmosphere of the terrestrial body it is on."
 	use_power = IDLE_POWER_USE
-	idle_power_usage = 50
-	active_power_usage = 250
+	idle_power_usage = 500
+	active_power_usage = 250000
 	circuit = /obj/item/circuitboard/machine/terraformer
 
-	var/atmos_goal = 0 //the goal of said gas, in mols
-	var/atmos_goal_gas = "o2" //what gas it's doing
-	var/cost_modifier = 10 //use this when making upgrades for the machine
-	var/list/cur_atmos = null // the current atmosphere
-	var/on = FALSE // bruh
-	var/molsPerTick = 0.001
+	var/cooldown = 300
+	var/cooldownTimer
+
+	var/list/possibleGasses = list()
+
+	var/molesPerProcess = 0.25
+
 
 /obj/machinery/terraformer/Initialize()
+	for(var/D in subtypesof(/datum/terraforming_gas))
+		possibleGasses += new D()
 	. = ..()
-	cur_atmos = SSterraforming.atmos.getAtmosString()
-
-/obj/machinery/terraformer/ui_interact(mob/user)
-	. = ..()
-	var/dat = "Terraformer<br><br>"
-	if(powered(power_channel))
-		cur_atmos = SSterraforming.atmos.getAtmosString()
-		dat += "Current Atmosphere: [cur_atmos]<br>"
-		dat += "Current goal (mols, gas): [atmos_goal], [atmos_goal_gas]<br>"
-		dat += "<a href='byond://?src=[REF(src)];on=1'>Turn On</a>  <a href='byond://?src=[REF(src)];off=1'>Turn Off</a><br><br>"
-		dat += "<a href='byond://?src=[REF(src)];o2=1'>Oxygen</a><BR>"
-		dat += "<a href='byond://?src=[REF(src)];n2=1'>Nitrogen</a><BR>"
-		dat += "<a href='byond://?src=[REF(src)];co2=1'>Carbon Dioxide</a><BR>"
-	user << browse(dat, "window=terraformer")
-	onclose(user, "terraformer")
-
-/obj/machinery/terraformer/Topic(href, href_list)
-	if(..())
-		return
-	if(href_list["o2"])
-		atmos_goal_gas = "o2"
-		return
-	else if(href_list["n2"])
-		atmos_goal_gas = "n2"
-		return
-	else if(href_list["co2"])
-		atmos_goal_gas = "co2"
-		return
-	else if(href_list["on"])
-		on = TRUE
-		return
-	else if(href_list["off"])
-		on = FALSE
-		return
-	else
-		return
 
 /obj/machinery/terraformer/process()
 	. = ..()
-	if(!on)
-		return
-	else
-		changeAtmos()
+	if(cooldownTimer < world.time)
+		HandleTerraforming()
+		cooldownTimer = world.time + cooldown
 
-/obj/machinery/terraformer/proc/changeAtmos()
-	var/current_gas = SSterraforming.atmos.getSpecificAtmos(atmos_goal_gas)
-	if(current_gas > atmos_goal)
-		SSterraforming.updateAtmosphere(list(atmos_goal_gas = -molsPerTick))
+/obj/machinery/terraformer/proc/HandleTerraforming()
+	if(stat & NOPOWER)
 		return
-	else if(current_gas < atmos_goal)
-		SSterraforming.updateAtmosphere(list(atmos_goal_gas = molsPerTick))
+	var/list/updatedAtmos = list()
+	for(var/datum/terraforming_gas/gasD in possibleGasses)
+		if(gasD.active)
+			updatedAtmos[gasD.gas] = molesPerProcess
+
+	SSterraforming.updateAtmosphere(updatedAtmos)
+
+
+/obj/machinery/terraformer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
+
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "terraformer", name, 475, 800, master_ui, state)
+		ui.open()
+
+/obj/machinery/terraformer/ui_data()
+	var/list/data = list()
+
+	data["drones"] = list()
+	for(var/obj/machinery/mining/bot/drones in GLOB.mining_bots)
+		var/list/upgrades = list()
+		for(var/obj/item/mining_upgrade/upgradesBot in drones.appliedUpgrades)
+			upgrades += list("upName" = upgradesBot.upgrade.name)
+		data["drones"] += list(list("cargo" = drones.cargo, "name" = drones.name, "cargoLen" = drones.cargo.len, "cargoMax" = drones.maxCargo,
+		"mining" = drones.mining, "botID" = REF(drones), "upgradesLen" = drones.appliedUpgrades.len, "upgradesMax" = drones.maxUpgrades,
+		"upgrades" = upgrades, "charge" = drones.battery.charge, "chargePercent" = drones.battery.percent(), "maxcharge" = drones.battery.maxcharge,
+		"mineDelay" = (drones.miningCooldown / 10), "mineAmount" = drones.oresPerCycle, "powerUsage" = drones.powerUsage))
+	return data
+
+/obj/machinery/terraformer/ui_act(action, params)
+	if(..())
 		return
-	else
-		return
+	switch(action)
+		if("toggleMining")
+			var/obj/machinery/mining/bot/bot = locate(params["bot"])
+			bot.toggleMining()
+			. = TRUE
+		if("unload")
+			var/obj/machinery/mining/bot/bot = locate(params["bot"])
+			if(!bot.mining)
+				bot.Unload()
+				. = TRUE
+
+/datum/terraforming_gas
+	var/name = "TEST"
+	var/gas = "TEST"
+	var/active = FALSE
+
+/datum/terraforming_gas/oxy
+	name = "Oxygen"
+	gas = "o2"
+	active = FALSE

@@ -17,6 +17,12 @@ SUBSYSTEM_DEF(terraforming)
 	return ..()
 
 /datum/controller/subsystem/terraforming/fire()
+	var/oxygen = SSterraforming.atmos.getSpecificAtmos("o2")
+	var/nitrogen = SSterraforming.atmos.getSpecificAtmos("n2")
+	if(nitrogen > 11)
+		if(oxygen > 39)
+			if(oxygen > nitrogen)
+
 	if(!lastState)
 		updateTiles()
 		return
@@ -54,3 +60,5 @@ SUBSYSTEM_DEF(terraforming)
 
 /datum/controller/subsystem/terraforming/proc/updateAtmosphere(list/addedAtmos, absoluteValue = FALSE)
 	atmos.changeComposition(addedAtmos, TRUE, absoluteValue)
+
+

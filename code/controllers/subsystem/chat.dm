@@ -1,6 +1,6 @@
 SUBSYSTEM_DEF(chat)
 	name = "Chat"
-	flags = SS_TICKER|SS_NO_INIT
+	flags = SS_TICKER
 	wait = 1
 	priority = FIRE_PRIORITY_CHAT
 	init_order = INIT_ORDER_CHAT
@@ -48,7 +48,7 @@ SUBSYSTEM_DEF(chat)
 			if(!C.chatOutput.loaded) //Client still loading, put their messages in a queue
 				C.chatOutput.messageQueue += message
 				continue
-			
+
 			message = to_utf8(message, I) // yogs - LibVG
 			payload[C] += url_encode(url_encode(message))
 

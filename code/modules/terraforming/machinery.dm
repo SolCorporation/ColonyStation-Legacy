@@ -93,9 +93,9 @@
 
 	data["on"] = on
 	if(on)
-		data["powerUsage"] = DisplayEnergy(active_power_usage)
+		data["powerUsage"] = DisplayPower(active_power_usage)
 	else
-		data["powerUsage"] = DisplayEnergy(idle_power_usage)
+		data["powerUsage"] = DisplayPower(idle_power_usage)
 	data["cooldown"] = round(cooldown / 10, 0.001)
 	data["molesPerCycle"] = round(molesPerProcess, 0.001)
 	data["pressure"] = round(totalPressure, 0.001)

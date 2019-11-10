@@ -1,0 +1,26 @@
+
+{{#each data.injector}}
+<ui-display title='{{injName}}'>
+  <ui-section label='Injector'>
+    <ui-section candystripe>
+      <div class='content'><b>Fuel Production Amount: </b> {{fuelAmount}}%</div>
+      <br>
+
+      <div class='content'><b>Installed Upgrades:</b></div>
+      <br>
+      {{#each NUps}}
+      <div class='content'>{{upNameN}}</div>
+      <br>
+      {{/each}}
+      <br>
+      <div class='content'><b>Produced Fuel</b></div>
+      <br>
+      <ui-button icon='play'
+      action='toggleFuel' params='{"inj": {{inj}}}'>{{fuel ? "Tritium" : "Deuterium"}}</ui-button>
+      <ui-button icon='play'
+      action='toggleActive' params='{"inj": {{inj}}}'>{{running ? "Stop Fuel Production" : "Start Fuel Production"}}</ui-button>
+
+    </ui-section>
+  </ui-section>
+</ui-display>
+{{/each}}

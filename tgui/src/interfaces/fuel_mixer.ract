@@ -1,0 +1,63 @@
+
+<ui-display title='Fuel Mixer'>
+  <ui-section candystripe>
+    <div class='content'><b>Deuterium Mix</b></div>
+    <br>
+    <ui-bar min='0' max='100' value='{{data.deu}}'
+        state='good'>{{Math.round(data.deu)}}%</ui-bar>
+    <br>
+    <br>
+    <ui-button icon='play'
+    action='deu1'>+1% Deuterium</ui-button>
+    <ui-button icon='play'
+    action='deu10'>+10% Deuterium</ui-button>
+    <br>
+    <br>
+
+    <div class='content'><b>Tritium Mix</b></div>
+    <br>
+    <ui-bar min='0' max='100' value='{{data.tri}}'
+        state='good'>{{Math.round(data.tri)}}%</ui-bar>
+    <br>
+    <br>
+    <ui-button icon='play'
+    action='tri1'>+1% Tritium</ui-button>
+    <ui-button icon='play'
+    action='tri10'>+10% Tritium</ui-button>
+    <br>
+    <br>
+    <ui-button icon='remove'
+    action='eject'>Eject Mix</ui-button>
+  </ui-section>
+</ui-display>
+
+<ui-display title="Fuel Additives">
+    <ui-section candystripe>
+        <div class='content'><b>Available Additives</b></div>
+        <br>
+        {{#each data.possibleAdditives}}
+            <div class='content'>{{aName}}</div>
+            <br>
+            <div class='content'>{{aDesc}}</div>
+            <br>
+            <ui-button icon='play'
+    action='add' params='{"additive": {{aName}}}'>Add Additive</ui-button>   
+            <br>
+            <br>
+        {{/each}}
+        <br>
+        <br>
+        <div class='content'><b>Added Additives</b></div>
+        <br>
+        {{#each data.additives}}
+            <div class='content'>{{aName}}</div>
+            <br>
+            <div class='content'>{{aDesc}}</div>
+            <br>
+            <ui-button icon='remove'
+    action='remove' params='{"additive": {{aName}}}'>Remove Additive</ui-button>
+            <br>
+            <br>
+        {{/each}}
+    </ui-section>
+</ui-display>

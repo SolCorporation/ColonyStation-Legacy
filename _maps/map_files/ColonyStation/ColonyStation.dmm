@@ -15,6 +15,92 @@
 /obj/effect/landmark/observer_start,
 /turf/open/floor/plating/asteroid/terraformable,
 /area/outside)
+"f" = (
+/turf/open/floor/plating,
+/area/outside)
+"g" = (
+/obj/machinery/power/fusion/core,
+/turf/open/floor/plating,
+/area/outside)
+"h" = (
+/obj/machinery/power/neutron_control,
+/turf/open/floor/plating/asteroid/terraformable,
+/area/outside)
+"i" = (
+/obj/machinery/power/neutron_inj,
+/turf/open/floor/plating/asteroid/terraformable,
+/area/outside)
+"j" = (
+/obj/machinery/computer/reactor_control,
+/turf/open/floor/plating/asteroid/terraformable,
+/area/outside)
+"k" = (
+/obj/machinery/power/generator_control,
+/turf/open/floor/plating/asteroid/terraformable,
+/area/outside)
+"l" = (
+/obj/machinery/power/fusion_gen,
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating/asteroid/terraformable,
+/area/outside)
+"m" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/turf/open/floor/plating/asteroid/terraformable,
+/area/outside)
+"n" = (
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/turf/open/floor/plating/asteroid/terraformable,
+/area/outside)
+"o" = (
+/obj/structure/cable{
+	icon_state = "1-4"
+	},
+/obj/structure/cable{
+	icon_state = "2-4"
+	},
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
+/turf/open/floor/plating/asteroid/terraformable,
+/area/outside)
+"p" = (
+/obj/machinery/power/smes,
+/turf/open/floor/plating/asteroid/terraformable,
+/area/outside)
+"q" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable{
+	icon_state = "0-8"
+	},
+/turf/open/floor/plating/asteroid/terraformable,
+/area/outside)
+"r" = (
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/turf/open/floor/plating/asteroid/terraformable,
+/area/outside)
+"s" = (
+/obj/machinery/power/fuel_mixer,
+/turf/open/floor/plating/asteroid/terraformable,
+/area/outside)
+"t" = (
+/obj/structure/table,
+/obj/item/flashlight/seclite,
+/obj/item/flashlight/seclite,
+/obj/item/flashlight/seclite,
+/obj/item/flashlight/seclite,
+/obj/item/disk/fuel_mix/default,
+/turf/open/floor/plating/asteroid/terraformable,
+/area/outside)
 
 (1,1,1) = {"
 b
@@ -60656,10 +60742,10 @@ d
 d
 d
 d
+i
 d
 d
-d
-d
+i
 d
 d
 d
@@ -61173,7 +61259,7 @@ d
 d
 d
 d
-d
+s
 d
 d
 d
@@ -61430,7 +61516,7 @@ d
 d
 d
 d
-d
+k
 d
 d
 d
@@ -61683,13 +61769,13 @@ d
 d
 d
 d
+f
+f
+f
 d
+h
 d
-d
-d
-d
-d
-d
+t
 d
 d
 d
@@ -61940,11 +62026,11 @@ d
 d
 d
 d
+f
+f
+g
 d
-d
-d
-d
-d
+j
 d
 d
 d
@@ -62197,9 +62283,9 @@ d
 d
 d
 d
-d
-d
-d
+f
+f
+f
 d
 d
 d
@@ -62711,9 +62797,9 @@ d
 d
 d
 d
-d
-d
-d
+n
+o
+m
 d
 d
 d
@@ -62968,9 +63054,9 @@ d
 d
 d
 d
-d
-d
-d
+l
+r
+l
 d
 d
 d
@@ -63226,7 +63312,7 @@ d
 d
 d
 d
-d
+r
 d
 d
 d
@@ -63482,8 +63568,8 @@ d
 d
 d
 d
-d
-d
+p
+q
 d
 d
 d

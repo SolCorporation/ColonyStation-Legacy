@@ -1,0 +1,78 @@
+
+<ui-display title='Reactor Controls'>
+  <ui-section candystripe>
+    {{#if data.meltDown}}<h1 class='bad'>CORE MELTDOWN - REWELD CONTAINMENT CHAMBER</h1><br>{{/if}}
+    {{#if data.overheating}}<h1 class='bad'>OVERHEATING</h1><br>{{/if}}
+    <div class='content'><b>Current Reactor Status<br>{{data.status}}</b></div>
+    <br>
+
+    <div class='content'><b>Reactor Deuterium Fuel Status</b></div>
+    <br>
+    <ui-bar min='0' max='100' value='{{data.deuterium}}'
+        state='{{data.deuterium >= 50 ? "good" : "average"}}'>{{Math.round(data.deuterium)}}%</ui-bar>
+    <br>
+
+    <div class='content'><b>Reactor Tritium Fuel Status</b></div>
+    <br>
+    <ui-bar min='0' max='100' value='{{data.tritium}}'
+        state='{{data.tritium >= 50 ? "good" : "average"}}'>{{Math.round(data.tritium)}}%</ui-bar>
+    <br>
+
+    <div class='content'><b>Reactor Temperature</b></div>
+    <br>
+    <ui-bar min='{{data.minTemp}}' max='{{data.maxTemp}}' value='{{data.temp}}'
+        state='{{data.tempState}}'>{{Math.round(data.temp)}}K</ui-bar>
+    <br>
+    <br>
+
+    <ui-button style='{{data.injecting ? "selected" : null}}' icon='{{data.injecting ? "stop" : "play"}}'
+    action='toggleInject'>{{data.injecting ? "Stop Fuel Injection" : "Begin Fuel Injection"}}</ui-button>
+
+    <ui-button style='{{data.running ? "disabled" : null}}' icon='play'
+    action='startReaction'>Spark Reaction</ui-button>
+
+    <br>
+    <br>
+    <ui-button style='{{data.collecting ? "selected" : null}}' icon='{{data.collecting ? "stop" : "play"}}'
+    action='toggleCollect'>{{data.collecting ? "Stop Heat Collection" : "Start Heat Collection"}}</ui-button>
+    <ui-button style='{{data.preheating ? "selected" : null}}' icon='{{data.preheating ? "stop" : "play"}}'
+    action='togglePreheat'>{{data.preheating ? "Stop Preheating" : "Start Preheating"}}</ui-button>
+    <br>
+    <br>
+    <ui-button style='danger {{data.running ? null : "disabled"}}' icon='remove'
+    action='flush'>EMERGENCY FUEL INJECTION CUTOFF</ui-button>
+    <br>
+    <br>
+    <div class='content'><b>Cryo-Coolant</b></div>
+    <br>
+    <ui-bar min='0' max='100' value='{{data.cryo}}'
+        state='{{data.cryo > 50 ? "good" : "average"}}'>{{Math.round(data.cryo)}}%</ui-bar>
+    <br>
+    <ui-button style='{{data.running ? null : "disabled"}}' icon='play'
+    action='cryo'>Inject Cryo Coolant</ui-button>
+    <br>
+    <br>
+  </ui-section>
+</ui-display>
+<ui-display title='Fuel Mix'>
+  <ui-section candystripe>
+    <div class='content'><b>Inserted Fuel Mix</b></div>
+    <br>
+    <div class='content'>Deuterium: {{data.deuteriumFuel}}%</div>
+    <br>
+    <div class='content'>Tritium: {{data.tritiumFuel}}%</div>
+    <br>
+    <div class='content'>Theoretical Power Max: {{maxPower}}</div>
+    <br>
+    <div class='content'><b>Fuel Additives</b></div>
+    <br>
+    {{#each data.fuelAdditives}}
+      <div class='content'>{{fuelName}}</div>
+      <br>
+    {{/each}}
+    <br>
+    <ui-button style='{{data.hasMix ? null : "disabled"}}' icon='remove'
+    action='ejectMix'>Eject Fuel Mix Disk</ui-button>
+
+  </ui-section>
+</ui-display>

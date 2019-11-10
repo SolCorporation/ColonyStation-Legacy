@@ -1,0 +1,33 @@
+
+{{#each data.generator}}
+<ui-display title='{{gName}}'>
+  <ui-section label='Generator'>
+    <ui-section candystripe>
+      <div class='content'><b>Generator Heat</b></div>
+      <br>
+      <ui-bar min='0' max='{{maxHeat}}' value='{{heat}}'
+        state='{{heat >= cutoff ? "good" : "average"}}'>{{Math.round(heat)}}%</ui-bar>
+      <br>
+      <div class='content'><b>Generator Condition:</b></div>
+      <br>
+      <ui-bar min='0' max='100' value='{{condition}}'
+        state='{{condition <= 50 ? "bad" : "average"}}'>{{Math.round(condition)}}%</ui-bar>
+      <br>
+      <br>
+      <div class='content'><b>Installed Upgrades:</b></div>
+      <br>
+      {{#each gUps}}
+      <div class='content'>{{upNameG}}</div>
+      <br>
+      {{/each}}
+      <br>
+      <div class='content'><b>Last Cycle Output: </b> {{lastOutput}}</div>
+      <br>
+      <div class='content'><b>Status: </b> {{status}}</div>
+      <br>
+      <ui-button icon='play'
+      action='toggleOn' params='{"G": {{gen}}}'>{{on ? "Stop Generator" : "Spin up Generator"}}</ui-button>
+    </ui-section>
+  </ui-section>
+</ui-display>
+{{/each}}

@@ -35,8 +35,8 @@
     <br>
     <ui-button style='{{data.collecting ? "selected" : null}}' icon='{{data.collecting ? "stop" : "play"}}'
     action='toggleCollect'>{{data.collecting ? "Stop Heat Collection" : "Start Heat Collection"}}</ui-button>
-    <ui-button style='{{data.preheat ? "selected" : null}}' icon='{{data.preheat ? "stop" : "play"}}'
-    action='togglePreheat'>{{data.preheat ? "Stop Preheating" : "Start Preheating"}}</ui-button>
+    <ui-button style='{{data.preheating ? "selected" : null}}' icon='{{data.preheating ? "stop" : "play"}}'
+    action='togglePreheat'>{{data.preheating ? "Stop Preheating" : "Start Preheating"}}</ui-button>
     <br>
     <br>
     <ui-button style='danger {{data.running ? null : "disabled"}}' icon='remove'

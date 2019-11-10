@@ -1,0 +1,37 @@
+
+<ui-display title='Terraforming Controls'>
+	<ui-section candystripe>
+		<div class='content'><b>Terraforming Gasses</b></div>
+		{{#each data.gasses}}
+			<ui-button icon='{{active ? "check-square-o" : "square-o"}}' style='{{active ? "selected" : null}}' action='toggleGas' params='{"gasType": {{gas}}}'>
+        	{{gasName}}</ui-button>
+		{{/each}}
+		<br>
+		<div class='content'><b>Terraforming Cycle Delay:</b> {{data.cooldown}} second(s)</div>
+		<div class='content'><b>Moles per Cycle:</b> {{data.molesPerCycle}} mole(s)</div>
+		<br>
+		<div class='content'><b>Power Usage:</b> {{data.powerUsage}}</div>
+		<br>
+
+		<ui-button style='{{data.on ? "selected" : null}}' icon='{{data.on ? "stop" : "play"}}'
+		action='toggleOn'>{{data.on ? "Stop Terraforming" : "Begin Terraforming"}}</ui-button>
+	</ui-section>
+</ui-display>
+<ui-display title='Atmospheric Statistics'>
+	<ui-section candystripe>
+			<div class='content'><b>Atmospheric Contents:</b></div>
+			<br>
+			{{#if data.o2 > 0}}<div class='content'><b>Oxygen:</b> {{data.o2}} mole(s)</div><br>{{/if}}
+			
+			{{#if data.n2 > 0}}<div class='content'><b>Nitrogen:</b> {{data.n2}} mole(s)</div><br>{{/if}}
+
+			{{#if data.co2 > 0}}<div class='content'><b>Carbon Dioxide:</b> {{data.co2}} mole(s)</div><br>{{/if}}
+			{{#if data.n2o > 0}}<div class='content'><b>Nitrous Oxide:</b> {{data.n2o}} mole(s)</div><br>{{/if}}
+
+			{{#if data.plasma > 0}}<div class='content'><b>Plasma:</b> {{data.plasma}} mole(s)</div><br>{{/if}}
+
+			{{#if data.temp > 0}}<div class='content'><b>Temperature:</b> {{data.temp}}K ({{data.c}}C)</div><br>{{/if}}
+
+			{{#if data.pressure > 0}}<div class='content'><b>Total Pressure:</b> {{data.pressure}} kPa</div><br>{{/if}}
+	</ui-section>
+</ui-display>

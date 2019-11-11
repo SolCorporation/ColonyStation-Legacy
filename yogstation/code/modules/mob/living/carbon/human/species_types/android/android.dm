@@ -149,7 +149,7 @@ adjust_charge - take a positive or negative value to adjust the charge level
 
 /datum/species/android/proc/handle_charge(mob/living/carbon/human/H)
 	charge = CLAMP(charge - power_drain,ANDROID_LEVEL_NONE,ANDROID_LEVEL_FULL)
-	if(charge == ANDOIRD_LEVEL_NONE)
+	if(charge == ANDROID_LEVEL_NONE)
 		to_chat(H,"<span class='danger'>Warning! System power criti-$#@$</span>")
 		H.death()
 	else if(charge < ANDROID_LEVEL_STARVING)

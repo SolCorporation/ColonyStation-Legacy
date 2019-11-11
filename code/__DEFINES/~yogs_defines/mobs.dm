@@ -21,7 +21,7 @@
  #define DARKSPAWN_DARK_HEAL 5 //how much damage of each type (with fire damage half rate) is healed in the dark
 #define DARKSPAWN_LIGHT_BURN 7 //how much damage the darkspawn receives per tick in lit areas
 
-// Androids go here. Based of Preternis (as in literally mirrored for now)
+// Android defines go here. Based of Preternis (as in literally mirrored for now)
 #define ANDROID_LEVEL_FULL 550
 #define ANDROID_LEVEL_WELL_FED 450
 #define ANDROID_LEVEL_FED 350

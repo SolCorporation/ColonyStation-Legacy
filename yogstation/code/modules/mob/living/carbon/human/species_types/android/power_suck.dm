@@ -93,11 +93,6 @@
 	draining = FALSE
 	return TRUE
 
-/atom/proc/can_consume_power_from()
-	return FALSE //if a string is returned, it will evaluate as false and be output to the person draining.
-
-/atom/proc/consume_power_from(amount)
-	return FALSE //return the amount that was drained.
 
 #define MIN_DRAINABLE_POWER 10
 

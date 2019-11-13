@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(chat)
 			return
 
 
-/datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE)
+/datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE, confidential = FALSE)
 	if(!target || !message)
 		return
 
@@ -37,6 +37,8 @@ SUBSYSTEM_DEF(chat)
 		message = replacetext(message, "\t", "[FOURSPACES][FOURSPACES]")
 	message += "<br>"
 
+	if(!confidential)
+		SSdemo.write_chat(target, message)
 
 	if(islist(target))
 		for(var/I in target)

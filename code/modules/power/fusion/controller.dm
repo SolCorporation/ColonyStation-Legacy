@@ -110,7 +110,7 @@
 			reactor.flush()
 			. = TRUE
 		if("ejectMix")
-			if(!mix)
+			if(!mix || reactor.status != "stopped")
 				return
 			mix.forceMove(get_turf(src))
 			mix = null

@@ -1,0 +1,27 @@
+<ui-display title='Artifact Analyzer'>
+  <ui-section candystripe>
+    {{#if data.art}}
+    	<div class='content'>Status: {{data.status}}</div>
+    	<br>
+    	{{#if data.running}}
+    		<div class='content'>Analyzer Progress</div>
+    		<br>
+    		<ui-bar min='0' max='{{data.max}}' value='{{data.ticksRemaining}}'
+        state='good'>{{data.timeRemaining}} second(s)</ui-bar>
+        	<br>
+        	<br>
+        	<br>
+        	<ui-button style='danger {{data.running ? null : "disabled"}}' icon='remove'
+    action='abort'>Abort</ui-button>
+    	{{else}}
+    		<ui-button icon='play' style='{{data.running ? "disabled" : null}}'
+    action='begin'>Start Examination</ui-button>
+    	{{/if}}
+    	<ui-button style='{{data.running ? "disabled" : null}}' icon='remove'
+    action='eject'>Eject Artifact</ui-button>
+    {{else}}
+    	<div class='content'><h2>No Artifact Inserted</h2></div>
+    	<br>
+    {{/if}}
+  </ui-section>
+</ui-display>

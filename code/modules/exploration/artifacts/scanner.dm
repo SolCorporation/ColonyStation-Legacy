@@ -10,47 +10,64 @@
 	specific = "SCANNER"
 
 
-	cooldown = 180
+	cooldown = 3000
 
-	var/running = FALSE
+/obj/machinery/exploration/machines/analyzer/ui_interact(mob/user, ui_key = "main", datum/tgui/ui = null, force_open = FALSE, \
+									datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 
-/obj/machinery/exploration/machines/analyzer/Initialize()
-	START_PROCESSING(SSobj, src)
-	..()
+	ui = SStgui.try_update_ui(user, src, ui_key, ui, force_open)
+	if(!ui)
+		ui = new(user, src, ui_key, "artifact_analyzer", name, 475, 800, master_ui, state)
+		ui.open()
 
-/obj/machinery/exploration/machines/analyzer/process()
+/obj/machinery/exploration/machines/analyzer/ui_data()
+	var/list/data = list()
+
+	data["running"] = running
+	data["max"] = cooldown
+	data["ticksRemaining"] = cooldownTimer - world.time
+	data["timeRemaining"] = (cooldownTimer - world.time) / 10
+	data["art"] = art
+
+	var/stat
 	if(running)
-		if(world.time > cooldownTimer)
-			Finished()
+		stat = "Running"
+	else
+		stat = "Idle"
 
-/obj/machinery/exploration/machines/analyzer/Destroy()
-	STOP_PROCESSING(SSobj, src)
-	if(art)
-		art.forceMove(get_turf(src))
-	art = null
-	..()
+	data["status"] = stat
 
-/obj/machinery/exploration/machines/analyzer/proc/Begin()
-	if(running)
+	return data
+
+/obj/machinery/exploration/machines/analyzer/ui_act(action, params)
+	if(..())
 		return
-	if(!art)
-		return
-	cooldownTimer = world.time + cooldown
+	switch(action)
+		if("abort")
+			if(running)
+				running = FALSE
+				update_icon()
+		if("eject")
+			if(!running)
+				remove()
+				running = FALSE
+				update_icon()
+		if("begin")
+			if(art && !running)
+				Begin()
 
-	running = TRUE
-	update_icon()
 
-
-
-/obj/machinery/exploration/machines/analyzer/proc/Finished()
+/obj/machinery/exploration/machines/analyzer/Finished()
 	if(!running)
 		return
 	if(!art)
 		visible_message("<span class='warning'>No artifact loaded</span>")
+		return
 
-	visible_message("<span class='warning'>The scanner reports that the next step should be: [art.getNextStep()]</span>")
+	visible_message("<span class='danger'>The scanner reports that the next step should be: [art.getNextStep()]</span>")
 
 	running = FALSE
+	remove()
 	update_icon()
 
 /obj/machinery/exploration/machines/analyzer/update_icon()
@@ -64,7 +81,7 @@
 /obj/machinery/exploration/machines/analyzer/success()
 	return
 
-/obj/machinery/exploration/machines/attackby(obj/item/W, mob/user, params)
+/obj/machinery/exploration/machines/analyzer/attackby(obj/item/W, mob/user, params)
 	..()
 	if(istype(W, /obj/item/artifact))
 		if(art)

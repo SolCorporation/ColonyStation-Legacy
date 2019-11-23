@@ -5,7 +5,7 @@
 
 
 /obj/item/artifact
-	name = "artifact"
+	name = "\improper artifact"
 	desc = "What mysteries could this hold?"
 	icon = 'icons/obj/assemblies.dmi'
 
@@ -62,12 +62,12 @@
 				if(R.specifics == specific)
 					R.fulfilled = TRUE
 					if(M)
-						M.visible_message("<span class='warning>The [src] [pick(R.possible_solve_texts)].</span>")
+						M.visible_message("<span class='warning'>\The [src] [pick(R.possible_solve_texts)].</span>")
 					checkCompletion(M)
 					return
 			else
 				if(M)
-					M.visible_message("<span class='warning>The [src] [pick(R.possible_solve_texts)].</span>")
+					M.visible_message("<span class='warning'>\The [src] [pick(R.possible_solve_texts)].</span>")
 				R.fulfilled = TRUE
 				checkCompletion(M)
 				return
@@ -84,7 +84,7 @@
 	if(completed >= requirements.len)
 		var/item = new outcome(get_turf(src))
 		if(M)
-			M.visible_message("<span class='warning>The [src] cracks and reveals the [item].</span>")
+			M.visible_message("<span class='warning'>\The [src] cracks and reveals \the [item].</span>")
 			M.success()
 		qdel(src)
 
@@ -97,7 +97,7 @@
 
 /obj/item/artifact/proc/Reset(obj/M)
 	if(M)
-		M.visible_message("<span class='warning>The [src] makes an audible hiss.")
+		M.visible_message("<span class='warning'>\The [src] makes an audible hiss.")
 	for(var/datum/artifact_requirement/R in requirements)
 		R.fulfilled = FALSE
 

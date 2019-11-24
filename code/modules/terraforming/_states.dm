@@ -47,7 +47,7 @@
 	id = "first_green"
 	icon_state = "grass"
 	probability = 10
-	possible_spawns = list(/obj/structure/flora/grass/brown)
+	possibleSpawns = list(/obj/structure/flora/grass/brown)
 	requiredAtmos = list("o2" = 17, "co2" = 3, "TEMP" = 278.15)
 
 /datum/terraform_state/first_green/updateState(turf/T)
@@ -63,7 +63,7 @@
 	icon_state = "grass"
 	probability = 20
 
-	possible_spawns = list(/obj/structure/flora/grass/both, /obj/structure/flora/grass/brown, /obj/structure/flora/grass/green, /obj/structure/flora/ausbushes/fullgrass)
+	possibleSpawns = list(/obj/structure/flora/grass/both, /obj/structure/flora/grass/brown, /obj/structure/flora/grass/green, /obj/structure/flora/ausbushes/fullgrass)
 	requiredAtmos = list("o2" = 18.5, "co2" = 3, "TEMP" = 284.15)
 
 /datum/terraform_state/more_grass/updateState(turf/T)
@@ -79,7 +79,7 @@
 	id = "trees"
 	icon_state = "grass"
 	probability = 20
-	possible_spawns = list(/obj/structure/flora/tree/jungle, /obj/structure/flora/tree/jungle/small, /obj/structure/flora/grass/both)
+	possibleSpawns = list(/obj/structure/flora/tree/jungle, /obj/structure/flora/tree/jungle/small, /obj/structure/flora/grass/both)
 	requiredAtmos = list("o2" = 19.5, "co2" = 4, "TEMP" = 288.15)
 
 /datum/terraform_state/trees/updateState(turf/T)

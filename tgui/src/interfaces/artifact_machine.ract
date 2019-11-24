@@ -1,0 +1,36 @@
+<ui-display title='{{data.goodName}}'>
+  <ui-section candystripe>
+    {{#if data.art}}
+    	<div class='content'>Status: {{data.status}}</div>
+    	<br>
+    	{{#if data.running}}
+    		<div class='content'>Experiment Progress</div>
+    		<br>
+    		<ui-bar min='0' max='{{data.max}}' value='{{data.ticksRemaining}}'
+        state='good'>{{data.timeRemaining}} second(s)</ui-bar>
+        	<br>
+        	<br>
+        	<br>
+        	<ui-button style='danger {{data.running ? null : "disabled"}}' icon='remove'
+    action='abort'>Abort</ui-button>
+    	{{else}}
+    		<ui-button icon='play' style='{{data.running ? "disabled" : null}}'
+    action='begin'>Start Experiment</ui-button>
+            <br>
+            <br>
+            
+    	{{/if}}
+    	<ui-button style='{{data.running ? "disabled" : null}}' icon='remove'
+    action='eject'>Eject Artifact</ui-button>
+    {{else}}
+    	<div class='content'><h2>No Artifact Inserted</h2></div>
+    	<br>
+        <br>
+    {{/if}}
+        <div class='content'><b>Switch Operating Modes</b></div>
+            {{#each data.specifics}}
+                <ui-button icon='cog' style='{{#if data.curSpecific == ourSpecific}} selected {{/if}}'
+    action='specific' params='{"newSpecific": {{ourSpecific}}}'>{{specificName}}</ui-button>
+            {{/each}}
+  </ui-section>
+</ui-display>

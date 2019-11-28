@@ -873,7 +873,7 @@
 
 /obj/item/circuitboard/machine/public_nanite_chamber/multitool_act(mob/living/user)
 	var/new_cloud = input("Set the public nanite chamber's Cloud ID (1-100).", "Cloud ID", cloud_id) as num|null
-	if(new_cloud == null)
+	if(new_cloud && (src.loc == user))
 		return
 	cloud_id = CLAMP(round(new_cloud, 1), 1, 100)
 
@@ -1164,7 +1164,7 @@
 		/obj/item/stock_parts/manipulator = /obj/item/stock_parts/manipulator/femto,
 		/obj/item/stock_parts/micro_laser = /obj/item/stock_parts/micro_laser/quadultra,
 		/obj/item/stock_parts/scanning_module = /obj/item/stock_parts/scanning_module/triphasic)
-
+		
 //terraforming
 
 /obj/item/circuitboard/machine/terraformer

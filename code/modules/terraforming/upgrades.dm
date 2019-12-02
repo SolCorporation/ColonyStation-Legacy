@@ -2,7 +2,7 @@
 	name = "terraformer upgrade housing"
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter-broken"
-	desc = "An accessory to the terraformer, that accepts various upgrades"
+	desc = "An accessory to the terraformer, that accepts various upgrades."
 	use_power = IDLE_POWER_USE
 	idle_power_usage = 500
 	active_power_usage = 500
@@ -100,7 +100,7 @@
 
 /datum/terraformer_upgrade/plasma_beaming
 	name = "Plasma Quantum Beaming"
-	desc = "Allows the terraformer to produce plasma, a very flammable and very potent greenhouse gas"
+	desc = "Allows the terraformer to produce plasma, a very flammable and very potent greenhouse gas."
 
 /datum/terraformer_upgrade/plasma_beaming/OnApply(obj/machinery/terraformer/T)
 	for(var/G in T.possibleGasses)
@@ -116,7 +116,7 @@
 
 /datum/terraformer_upgrade/electromagnetic_infusing
 	name = "Electromagnetic Infusion"
-	desc = "The terraformer now produces an additional 0.1 moles of gas"
+	desc = "The terraformer now produces an additional 0.1 moles of gas."
 
 /datum/terraformer_upgrade/electromagnetic_infusing/OnApply(obj/machinery/terraformer/T)
 	T.baseMoles += 0.1

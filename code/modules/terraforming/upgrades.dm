@@ -1,5 +1,5 @@
 /obj/machinery/terraformer_upgrades
-	name = "Terraformer Upgrade Housing"
+	name = "terraformer upgrade housing"
 	icon = 'icons/obj/pda.dmi'
 	icon_state = "pdapainter-broken"
 	desc = "An accessory to the terraformer, that accepts various upgrades"
@@ -29,6 +29,7 @@
 		upgrades += upgrade
 		upgrade.forceMove(src)
 		upgrade.upgrade.OnApply(terra)
+		terra.recalculateProperties()
 	else
 		..()
 
@@ -36,10 +37,11 @@
 	. = TRUE
 	if(upgrades.len)
 		I.play_tool_sound(src, 100)
-		for(var/obj/item/mining_upgrade/upgrade in upgrades)
+		for(var/obj/item/terraform_upgrade/upgrade in upgrades)
 			upgrade.forceMove(get_turf(src))
 			upgrade.upgrade.OnRemove(terra)
 		upgrades = list()
+		terra.recalculateProperties()
 	else
 		to_chat(user, "<span class='notice'>There are no upgrades currently installed.</span>")
 
@@ -69,8 +71,11 @@
 /obj/item/terraform_upgrade/phasic_manipulation
 	upgrade = new /datum/terraformer_upgrade/phasic_eff()
 
-/obj/item/terraform_upgrade/palasma
+/obj/item/terraform_upgrade/plasma
 	upgrade = new /datum/terraformer_upgrade/plasma_beaming()
+
+/obj/item/terraform_upgrade/electromagnetic
+	upgrade = new /datum/terraformer_upgrade/electromagnetic_infusing()
 
 /datum/terraformer_upgrade
 	var/name = "TEST"
@@ -97,18 +102,24 @@
 	name = "Plasma Quantum Beaming"
 	desc = "Allows the terraformer to produce plasma, a very flammable and very potent greenhouse gas"
 
-/datum/terraformer_upgrade/phasic_eff/OnApply(obj/machinery/terraformer/T)
-	T.possibleGasses += new /datum/terraforming_gas/plasma()
+/datum/terraformer_upgrade/plasma_beaming/OnApply(obj/machinery/terraformer/T)
+	for(var/G in T.possibleGasses)
+		var/datum/terraforming_gas/U = G
+		if(U.gas == "plasma")
+			U.unlocked = TRUE
 
-/datum/terraformer_upgrade/phasic_eff/OnRemove(obj/machinery/terraformer/T)
-	T.possibleGasses -= /datum/terraforming_gas/plasma
+/datum/terraformer_upgrade/plasma_beaming/OnRemove(obj/machinery/terraformer/T)
+	for(var/G in T.possibleGasses)
+		var/datum/terraforming_gas/U = G
+		if(U.gas == "plasma")
+			U.unlocked = FALSE
 
 /datum/terraformer_upgrade/electromagnetic_infusing
 	name = "Electromagnetic Infusion"
 	desc = "The terraformer now produces an additional 0.1 moles of gas"
 
-/datum/terraformer_upgrade/phasic_eff/OnApply(obj/machinery/terraformer/T)
+/datum/terraformer_upgrade/electromagnetic_infusing/OnApply(obj/machinery/terraformer/T)
 	T.baseMoles += 0.1
 
-/datum/terraformer_upgrade/phasic_eff/OnRemove(obj/machinery/terraformer/T)
+/datum/terraformer_upgrade/electromagnetic_infusing/OnRemove(obj/machinery/terraformer/T)
 	T.baseMoles -= 0.1

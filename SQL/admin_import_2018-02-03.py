@@ -72,7 +72,7 @@ cursor=db.cursor()
 ranks_table = args.rankstable
 admin_table = args.admintable
 ckeyExformat = re.sub("@|-|_", " ", string.punctuation)
-with open("..\\config\\admin_ranks.txt") as rank_file:
+with open("..//config//admin_ranks.txt") as rank_file:
     previous = 0
     for line in rank_file:
         if line.strip():
@@ -83,7 +83,7 @@ with open("..\\config\\admin_ranks.txt") as rank_file:
             flags = parse_text_flags(matches.group(2), previous)
             previous = flags
             cursor.execute("INSERT INTO {0} (rank, flags, exclude_flags, can_edit_flags) VALUES ('{1}', {2}, {3}, {4})".format(ranks_table, rank, flags[0], flags[1], flags[2]))
-with open("..\\config\\admins.txt") as admins_file:
+with open("..//config//admins.txt") as admins_file:
     previous = 0
     ckeyformat = string.punctuation.replace("@", " ")
     for line in admins_file:

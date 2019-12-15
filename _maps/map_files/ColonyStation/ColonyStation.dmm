@@ -1151,8 +1151,6 @@
 	dir = 8
 	},
 /obj/machinery/microwave{
-	step_x = 3;
-	step_y = 0;
 	pixel_x = -3;
 	pixel_y = 6
 	},
@@ -1350,10 +1348,10 @@
 "dt" = (
 /obj/structure/table/reinforced,
 /obj/item/disk/fuel_mix/default{
-	step_x = 31
+	
 	},
 /obj/item/disk/fuel_mix/default{
-	step_x = 31
+	
 	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
@@ -1388,7 +1386,7 @@
 /area/crew_quarters/lounge)
 "dy" = (
 /obj/structure/sink/kitchen{
-	step_y = 24
+	
 	},
 /turf/open/floor/wood,
 /area/crew_quarters/lounge)
@@ -1803,8 +1801,6 @@
 "ey" = (
 /obj/structure/mirror{
 	bound_y = 0;
-	step_x = 0;
-	step_y = -36;
 	pixel_x = 1;
 	pixel_y = 2
 	},
@@ -14692,7 +14688,7 @@
 /area/crew_quarters/bar)
 "IZ" = (
 /obj/item/instrument/eguitar{
-	step_x = 5
+	
 	},
 /obj/item/instrument/guitar,
 /obj/structure/table/wood,

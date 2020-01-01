@@ -28,7 +28,6 @@
 /obj/item/organ/ears,
 /obj/item/organ/cyberimp/eyes/hud/medical,
 /obj/item/organ/brain,
-/obj/item/organ/body_egg/changeling_egg,
 /obj/item/organ/appendix,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
@@ -59,7 +58,6 @@
 "ah" = (
 /obj/structure/closet/crate/sphere,
 /obj/machinery/camera,
-/obj/effect/spawner/lootdrop/armory_contraband,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -76,8 +74,6 @@
 /area/quartermaster/warehouse)
 "aj" = (
 /obj/structure/closet/crate/silvercrate,
-/obj/effect/spawner/lootdrop/pizzaparty,
-/obj/effect/spawner/lootdrop/pizzaparty,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -121,9 +117,6 @@
 /area/quartermaster/warehouse)
 "aq" = (
 /obj/structure/closet/crate/freezer,
-/obj/effect/spawner/lootdrop/organ_spawner,
-/obj/effect/spawner/lootdrop/organ_spawner,
-/obj/effect/spawner/lootdrop/organ_spawner,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -146,8 +139,8 @@
 	},
 /area/quartermaster/warehouse)
 "at" = (
-/obj/effect/spawner/lootdrop/crate_spawner,
-/obj/structure/closet/crate/science,
+/obj/structure/closet/crate/goldcrate,
+/obj/effect/spawner/lootdrop/maintenance/eight,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -184,9 +177,7 @@
 	},
 /area/quartermaster/miningoffice)
 "aA" = (
-/obj/structure/closet/crate/goldcrate,
-/obj/effect/spawner/lootdrop/maintenance/eight,
-/obj/effect/spawner/lootdrop/maintenance/eight,
+/obj/effect/spawner/lootdrop/crate_spawner,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -239,6 +230,13 @@
 /area/quartermaster/qm)
 "aE" = (
 /obj/structure/closet/crate/critter/exoticgoats,
+/turf/open/floor/plasteel{
+	heat_capacity = 1e+006
+	},
+/area/quartermaster/warehouse)
+"aF" = (
+/obj/structure/closet/crate/radiation,
+/obj/effect/spawner/lootdrop/gloves,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -1356,10 +1354,8 @@
 /area/engine/engineering)
 "dt" = (
 /obj/structure/table/reinforced,
-/obj/item/disk/fuel_mix/default{
-	},
-/obj/item/disk/fuel_mix/default{
-	},
+/obj/item/disk/fuel_mix/default,
+/obj/item/disk/fuel_mix/default,
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "du" = (
@@ -1369,9 +1365,7 @@
 	},
 /area/quartermaster/storage)
 "dv" = (
-/obj/structure/closet/crate/radiation,
-/obj/effect/spawner/lootdrop/gloves,
-/obj/effect/spawner/lootdrop/gloves,
+/obj/structure/closet/crate/wooden/toy,
 /turf/open/floor/plasteel{
 	heat_capacity = 1e+006
 	},
@@ -1388,8 +1382,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/lounge)
 "dy" = (
-/obj/structure/sink/kitchen{
-	},
+/obj/structure/sink/kitchen,
 /turf/open/floor/wood,
 /area/crew_quarters/lounge)
 "dz" = (
@@ -1534,12 +1527,12 @@
 /turf/closed/wall/r_wall,
 /area/science/xenobiology)
 "dU" = (
-/obj/structure/closet/crate/wooden/toy,
-/obj/effect/spawner/lootdrop/minor/twentyfive_percent_cyborg_mask,
-/turf/open/floor/plasteel{
-	heat_capacity = 1e+006
+/obj/structure/cable{
+	icon_state = "2-8"
 	},
-/area/quartermaster/warehouse)
+/obj/machinery/camera,
+/turf/open/floor/plasteel,
+/area/engine/engine_smes)
 "dV" = (
 /obj/machinery/light,
 /turf/open/floor/plasteel{
@@ -5478,6 +5471,9 @@
 	req_access_txt = "11"
 	},
 /obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer3,
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
 /turf/open/floor/plasteel,
 /area/engine/engineering)
 "oH" = (
@@ -14784,8 +14780,7 @@
 /turf/open/floor/wood,
 /area/crew_quarters/bar)
 "IZ" = (
-/obj/item/instrument/eguitar{
-	},
+/obj/item/instrument/eguitar,
 /obj/item/instrument/guitar,
 /obj/structure/table/wood,
 /obj/machinery/light,
@@ -16068,12 +16063,16 @@
 /turf/open/floor/plasteel/dark,
 /area/chapel/office)
 "LN" = (
-/obj/structure/cable{
-	icon_state = "2-8"
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Reactor Room";
+	req_access_txt = "11"
 	},
-/obj/machinery/camera,
+/obj/structure/cable{
+	icon_state = "1-2"
+	},
 /turf/open/floor/plasteel,
-/area/engine/engine_smes)
+/area/engine/engineering)
 "LO" = (
 /obj/effect/turf_decal/tile/neutral{
 	dir = 1
@@ -40291,7 +40290,7 @@ cE
 cE
 cE
 cP
-oC
+LN
 df
 cZ
 cZ
@@ -40806,7 +40805,7 @@ cD
 cD
 cD
 cD
-LN
+dU
 bq
 FR
 jZ
@@ -44593,7 +44592,7 @@ aa
 af
 aq
 bZ
-dU
+dv
 aa
 fX
 aR
@@ -44849,7 +44848,7 @@ ad
 aa
 ag
 ar
-dv
+aF
 aG
 aa
 aO
@@ -45105,7 +45104,7 @@ ad
 ad
 aa
 ah
-aA
+at
 as
 as
 aJ
@@ -45362,7 +45361,7 @@ ad
 ad
 aa
 ai
-at
+aA
 as
 as
 aJ

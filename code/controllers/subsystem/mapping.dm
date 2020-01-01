@@ -16,6 +16,7 @@ SUBSYSTEM_DEF(mapping)
 	var/list/ruins_templates = list()
 	var/list/space_ruins_templates = list()
 	var/list/lava_ruins_templates = list()
+	var/list/colony_ruins_templates = list()
 
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
@@ -93,8 +94,15 @@ SUBSYSTEM_DEF(mapping)
 	if (space_ruins.len)
 		seedRuins(space_ruins, CONFIG_GET(number/space_budget), /area/space, space_ruins_templates)
 	seedStation()
+
+	var/list/planet_level = levels_by_trait(ZTRAIT_STATION)
+	if(planet_level.len)
+		seedRuins(planet_level, CONFIG_GET(number/planet_budget), /area/planet/outside/unexplored, colony_ruins_templates)
+
 	loading_ruins = FALSE
+
 #endif
+
 	// Add the transit level
 	transit = add_new_zlevel("Transit/Reserved", list(ZTRAIT_RESERVED = TRUE))
 	repopulate_sorted_areas()
@@ -161,6 +169,7 @@ SUBSYSTEM_DEF(mapping)
 	ruins_templates = SSmapping.ruins_templates
 	space_ruins_templates = SSmapping.space_ruins_templates
 	lava_ruins_templates = SSmapping.lava_ruins_templates
+	colony_ruins_templates = SSmapping.colony_ruins_templates
 	shuttle_templates = SSmapping.shuttle_templates
 	shelter_templates = SSmapping.shelter_templates
 	unused_turfs = SSmapping.unused_turfs
@@ -247,6 +256,8 @@ SUBSYSTEM_DEF(mapping)
 	// load mining
 	if(config.minetype == "lavaland")
 		LoadGroup(FailedZs, "Lavaland", "map_files/Mining", "Lavaland.dmm", default_traits = ZTRAITS_LAVALAND) //Yogs, yoglavaland
+	else if(config.minetype == "none")
+
 	else if (!isnull(config.minetype))
 		INIT_ANNOUNCE("WARNING: An unknown minetype '[config.minetype]' was set! This is being ignored! Update the maploader code!")
 #endif
@@ -353,6 +364,7 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	// Still supporting bans by filename
 	var/list/banned = generateMapList("[global.config.directory]/lavaruinblacklist.txt")
 	banned += generateMapList("[global.config.directory]/spaceruinblacklist.txt")
+	banned += generateMapList("[global.config.directory]/planetruinblacklist.txt")
 
 	for(var/item in sortList(subtypesof(/datum/map_template/ruin), /proc/cmp_ruincost_priority))
 		var/datum/map_template/ruin/ruin_type = item
@@ -373,6 +385,8 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 			space_ruins_templates[R.name] = R
 		else if(istype(R, /datum/map_template/ruin/station)) //yogs
 			station_room_templates[R.name] = R //yogs
+		else if(istype(R, /datum/map_template/ruin/colony))
+			colony_ruins_templates[R.name] = R
 
 /datum/controller/subsystem/mapping/proc/preloadShuttleTemplates()
 	var/list/unbuyable = generateMapList("[global.config.directory]/unbuyableshuttles.txt")

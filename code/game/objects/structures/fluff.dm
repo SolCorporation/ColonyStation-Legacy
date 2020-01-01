@@ -167,3 +167,11 @@
 	desc = "A crudely-made sign with the words 'fok of' written in some sort of red paint."
 	icon = 'icons/obj/fluff.dmi'
 	icon_state = "fokof"
+
+/obj/structure/fluff/ancient_turret
+	name = "ancient turret"
+	icon = 'icons/obj/turrets.dmi'
+	icon_state = "standard_broken"
+	layer = OBJ_LAYER
+	density = TRUE
+	desc = "A covered turret that shoots at its enemies. This one looks old."

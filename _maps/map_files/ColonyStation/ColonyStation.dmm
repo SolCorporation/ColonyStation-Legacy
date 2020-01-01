@@ -6263,7 +6263,6 @@
 	c_tag = "Security - Warden's Office";
 	dir = 8
 	},
-/obj/effect/spawner/lootdrop/whiteship_cere_ripley,
 /turf/open/floor/mech_bay_recharge_floor,
 /area/science/robotics/lab)
 "qB" = (
@@ -7368,7 +7367,7 @@
 "sT" = (
 /obj/machinery/rnd/server,
 /turf/open/floor/circuit/telecomms/server,
-/area/planet/outside)
+/area/science/server)
 "sU" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -7947,7 +7946,7 @@
 	name = "server vent"
 	},
 /turf/open/floor/circuit/telecomms/server,
-/area/planet/outside)
+/area/science/server)
 "um" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -7959,7 +7958,7 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/planet/outside)
+/area/science/server)
 "un" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/westleft{
@@ -7990,7 +7989,7 @@
 	icon_state = "1-4"
 	},
 /turf/open/floor/plasteel/dark,
-/area/planet/outside)
+/area/science/server)
 "uq" = (
 /obj/machinery/camera{
 	c_tag = "Server Room";
@@ -8008,7 +8007,7 @@
 	icon_state = "0-8"
 	},
 /turf/open/floor/plasteel/dark,
-/area/planet/outside)
+/area/science/server)
 "ur" = (
 /obj/effect/spawner/structure/window,
 /obj/machinery/door/firedoor,
@@ -8073,7 +8072,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /turf/open/floor/plasteel/dark,
-/area/planet/outside)
+/area/science/server)
 "uB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/medical/glass{
@@ -8390,15 +8389,8 @@
 /turf/open/floor/plasteel/white,
 /area/medical)
 "vl" = (
-/obj/machinery/airalarm/server{
-	dir = 4;
-	pixel_x = -22
-	},
-/obj/machinery/light/small{
-	dir = 8
-	},
-/turf/open/floor/plasteel/dark/telecomms,
-/area/planet/outside)
+/turf/closed/wall/r_wall,
+/area/science/server)
 "vm" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Chemistry Maintenance";
@@ -8855,8 +8847,15 @@
 /turf/open/floor/plasteel/white,
 /area/crew_quarters/heads/hor)
 "wn" = (
+/obj/machinery/airalarm/server{
+	dir = 4;
+	pixel_x = -22
+	},
+/obj/machinery/light/small{
+	dir = 8
+	},
 /turf/open/floor/plasteel/dark/telecomms,
-/area/planet/outside)
+/area/science/server)
 "wo" = (
 /turf/open/floor/carpet/purple,
 /area/crew_quarters/heads/hor)
@@ -9138,13 +9137,8 @@
 /turf/open/floor/plasteel,
 /area/security/warden)
 "wW" = (
-/obj/machinery/door/firedoor,
-/obj/machinery/door/airlock/command/glass{
-	name = "Server Room";
-	req_access_txt = "30"
-	},
-/turf/open/floor/plasteel/dark,
-/area/planet/outside)
+/turf/open/floor/plasteel/dark/telecomms,
+/area/science/server)
 "wX" = (
 /obj/structure/rack,
 /obj/item/storage/box/handcuffs,
@@ -10724,11 +10718,13 @@
 /turf/open/floor/plasteel,
 /area/hallway/primary/fore)
 "zJ" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 8
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/command/glass{
+	name = "Server Room";
+	req_access_txt = "30"
 	},
 /turf/open/floor/plasteel/dark,
-/area/planet/outside)
+/area/science/server)
 "zK" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -11344,24 +11340,21 @@
 /turf/open/floor/plating/asteroid/terraformable,
 /area/engine/atmos)
 "AU" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 8
+	},
+/turf/open/floor/plasteel/dark,
+/area/science/server)
+"AV" = (
+/turf/open/floor/plating,
+/area/planet/outside)
+"AW" = (
 /obj/structure/chair/office/light,
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
 /turf/open/floor/plasteel/dark,
-/area/planet/outside)
-"AV" = (
-/turf/open/floor/plating,
-/area/planet/outside)
-"AW" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9
-	},
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/open/floor/plasteel/dark,
-/area/planet/outside)
+/area/science/server)
 "AX" = (
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -12427,13 +12420,14 @@
 /turf/open/floor/plasteel,
 /area/ai_monitored/turret_protected/ai_upload_foyer)
 "Do" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
-	dir = 4;
-	external_pressure_bound = 120;
-	name = "server vent"
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9
 	},
-/turf/open/floor/circuit/telecomms/server,
-/area/planet/outside)
+/obj/machinery/light/small{
+	dir = 4
+	},
+/turf/open/floor/plasteel/dark,
+/area/science/server)
 "Dp" = (
 /obj/structure/chair/comfy/black,
 /obj/effect/landmark/start/head_of_security,
@@ -12488,6 +12482,14 @@
 /turf/open/floor/plasteel/dark,
 /area/crew_quarters/heads/chief)
 "Dv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/on{
+	dir = 4;
+	external_pressure_bound = 120;
+	name = "server vent"
+	},
+/turf/open/floor/circuit/telecomms/server,
+/area/science/server)
+"Dw" = (
 /obj/structure/sign/warning/securearea{
 	desc = "A warning sign which reads 'SERVER ROOM'.";
 	name = "SERVER ROOM";
@@ -12498,8 +12500,8 @@
 	},
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
-/area/planet/outside)
-"Dw" = (
+/area/science/server)
+"Dx" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 9
 	},
@@ -12508,13 +12510,7 @@
 	pixel_y = -26
 	},
 /turf/open/floor/plasteel/dark,
-/area/planet/outside)
-"Dx" = (
-/obj/machinery/computer/rdservercontrol{
-	dir = 1
-	},
-/turf/open/floor/plasteel/dark,
-/area/planet/outside)
+/area/science/server)
 "Dy" = (
 /obj/structure/cable{
 	icon_state = "2-4"
@@ -12542,11 +12538,11 @@
 /turf/open/floor/plasteel,
 /area/crew_quarters/locker)
 "DC" = (
-/obj/structure/table,
-/obj/item/folder/white,
-/obj/item/pen,
+/obj/machinery/computer/rdservercontrol{
+	dir = 1
+	},
 /turf/open/floor/plasteel/dark,
-/area/planet/outside)
+/area/science/server)
 "DD" = (
 /obj/structure/cable{
 	icon_state = "1-4"
@@ -17541,6 +17537,19 @@
 "Pj" = (
 /turf/open/floor/plating/asteroid/terraformable,
 /area/planet/outside/unexplored)
+"Pk" = (
+/obj/structure/table,
+/obj/item/folder/white,
+/obj/item/pen,
+/turf/open/floor/plasteel/dark,
+/area/science/server)
+"Pl" = (
+/obj/machinery/computer/rdconsole,
+/obj/effect/turf_decal/stripes/line{
+	dir = 1
+	},
+/turf/open/floor/plasteel,
+/area/science/robotics/lab)
 
 (1,1,1) = {"
 Pj
@@ -51305,7 +51314,7 @@ lr
 lA
 lN
 gC
-mh
+Pl
 tt
 eO
 sP
@@ -55171,9 +55180,9 @@ mo
 ui
 rz
 sT
-vl
+wn
 sT
-rs
+vl
 ad
 ad
 ad
@@ -55428,9 +55437,9 @@ mo
 ui
 rz
 ul
-wn
-Do
-rs
+wW
+Dv
+vl
 ad
 ad
 ad
@@ -55441,7 +55450,7 @@ hv
 hv
 hv
 hv
-rA
+hv
 ad
 ad
 ad
@@ -55685,9 +55694,9 @@ mo
 ui
 rz
 um
-wW
-Dv
-rs
+zJ
+Dw
+vl
 ad
 ad
 ad
@@ -55942,9 +55951,9 @@ mo
 uI
 rI
 up
-zJ
-Dw
-rs
+AU
+Dx
+vl
 ad
 ad
 ad
@@ -56199,9 +56208,9 @@ HP
 HW
 rz
 uq
-AU
-Dx
-rs
+AW
+DC
+vl
 ad
 ad
 ad
@@ -56456,9 +56465,9 @@ mo
 ui
 rz
 uA
-AW
-DC
-rs
+Do
+Pk
+vl
 ad
 ad
 ad
@@ -56712,10 +56721,10 @@ vK
 mo
 ui
 rz
-rs
-rs
-rs
-rs
+vl
+vl
+vl
+vl
 ad
 ad
 ad

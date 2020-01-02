@@ -27,6 +27,8 @@
 
 /datum/species/lizard/after_equip_job(datum/job/J, mob/living/carbon/human/H)
 	H.grant_language(/datum/language/draconic)
+	wings_icon = "Dragon"
+	species_language_holder = /datum/language_holder/lizard
 
 /datum/species/lizard/random_name(gender,unique,lastname)
 	if(unique)
@@ -82,6 +84,7 @@
 	inherent_traits = list(TRAIT_NOGUNS) //yogs start - ashwalkers have special lungs and actually breathe
 	mutantlungs = /obj/item/organ/lungs/ashwalker
 	breathid = "n2" // yogs end
+	species_language_holder = /datum/language_holder/lizard/ash
 
 // yogs start - Ashwalkers now have ash immunity
 /datum/species/lizard/ashwalker/on_species_gain(mob/living/carbon/C, datum/species/old_species)

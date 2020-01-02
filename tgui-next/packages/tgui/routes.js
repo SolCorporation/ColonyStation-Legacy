@@ -7,6 +7,7 @@ import { AtmosControlConsole } from './interfaces/AtmosControlConsole';
 import { AtmosFilter } from './interfaces/AtmosFilter';
 import { AtmosMixer } from './interfaces/AtmosMixer';
 import { AtmosPump } from './interfaces/AtmosPump';
+import { BankMachine } from './interfaces/BankMachine';
 import { BluespaceArtillery } from './interfaces/BluespaceArtillery';
 import { BorgPanel } from './interfaces/BorgPanel';
 import { BrigTimer } from './interfaces/BrigTimer';
@@ -42,8 +43,10 @@ import { NuclearBomb } from './interfaces/NuclearBomb';
 import { OperatingComputer } from './interfaces/OperatingComputer';
 import { OreBox } from './interfaces/OreBox';
 import { OreRedemptionMachine } from './interfaces/OreRedemptionMachine';
+import { Pandemic } from './interfaces/Pandemic';
 import { PersonalCrafting } from './interfaces/PersonalCrafting';
 import { PortableGenerator } from './interfaces/PortableGenerator';
+import { PortablePump, PortableScrubber } from './interfaces/PortableAtmos';
 import { PowerMonitor } from './interfaces/PowerMonitor';
 import { Radio } from './interfaces/Radio';
 import { RapidPipeDispenser } from './interfaces/RapidPipeDispenser';
@@ -101,6 +104,10 @@ const ROUTES = {
   },
   atmos_pump: {
     component: () => AtmosPump,
+    scrollable: false,
+  },
+  bank_machine: {
+    component: () => BankMachine,
     scrollable: false,
   },
   borgopanel: {
@@ -258,12 +265,24 @@ const ROUTES = {
     component: () => OperatingComputer,
     scrollable: true,
   },
+  pandemic: {
+    component: () => Pandemic,
+    scrollable: true,
+  },
   personal_crafting: {
     component: () => PersonalCrafting,
     scrollable: true,
   },
   portable_generator: {
     component: () => PortableGenerator,
+    scrollable: false,
+  },
+  portable_pump: {
+    component: () => PortablePump,
+    scrollable: false,
+  },
+  portable_scrubber: {
+    component: () => PortableScrubber,
     scrollable: false,
   },
   power_monitor: {

@@ -62,7 +62,7 @@
     <br>
     <div class='content'>Tritium: {{data.tritiumFuel}}%</div>
     <br>
-    <div class='content'>Theoretical Power Max: {{maxPower}}</div>
+    <div class='content'>Theoretical Power Max: {{data.maxPower}}</div>
     <br>
     <div class='content'><b>Fuel Additives</b></div>
     <br>

@@ -21,6 +21,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/shuttle_templates = list()
 	var/list/shelter_templates = list()
 
+	var/list/station_minimaps = list()
+
 	var/list/areas_in_z = list()
 
 	var/loading_ruins = FALSE
@@ -110,6 +112,8 @@ SUBSYSTEM_DEF(mapping)
 	setup_map_transitions()
 	generate_station_area_list()
 	initialize_reserved_level()
+	// Build minimaps
+	build_minimaps()
 	return ..()
 
 /datum/controller/subsystem/mapping/proc/wipe_reservations(wipe_safety_delay = 100)
@@ -533,7 +537,10 @@ GLOBAL_LIST_EMPTY(the_station_areas)
 	used_turfs.Cut()
 	reserve_turfs(clearing)
 
-
+/datum/controller/subsystem/mapping/proc/build_minimaps()
+	to_chat(world, "<span class='boldannounce'>Building minimaps...</span>")
+	for(var/z in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		station_minimaps += new /datum/minimap(z)
 
 /datum/controller/subsystem/mapping/proc/reg_in_areas_in_z(list/areas)
 	for(var/B in areas)

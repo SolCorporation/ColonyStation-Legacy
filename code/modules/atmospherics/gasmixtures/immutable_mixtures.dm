@@ -68,3 +68,14 @@
 
 /datum/gas_mixture/immutable/cloner/heat_capacity()
 	return (MOLES_O2STANDARD + MOLES_N2STANDARD)*20 //specific heat of nitrogen is 20
+
+/datum/gas_mixture/immutable/planet
+	initial_temperature = 259.15
+
+/datum/gas_mixture/immutable/planet/New(temp)
+	initial_temperature = temp
+	..()
+
+/datum/gas_mixture/immutable/cloner/garbage_collect()
+	temperature = initial_temperature
+	temperature_archived = initial_temperature

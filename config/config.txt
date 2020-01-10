@@ -514,3 +514,6 @@ DEFAULT_VIEW_SQUARE 15x15
 
 #Mentors only see ckeys by default. Uncomment to have them only see mob name
 #MENTORS_MOBNAME_ONLY
+
+## Enable automatic profiling - Byond 513.1506 and newer only.
+#AUTO_PROFILE

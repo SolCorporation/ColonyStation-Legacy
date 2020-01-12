@@ -69,6 +69,14 @@ import { Uplink } from './interfaces/Uplink';
 import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
 import { Guardian } from './interfaces/Guardian';
+import { Miningdronecontrol } from './interfaces/Miningdronecontrol';
+import { ArtifactMachine} from './interfaces/ArtifactMachine';
+import { ArtifactAnalyzer } from './interfaces/ArtifactAnalyzer';
+import { Terraformer } from './interfaces/Terraformer';
+import { NeutronController } from './interfaces/NeutronController'
+import { GeneratorController } from './interfaces/GeneratorController'
+import { FuelMixer } from './interfaces/FuelMixer'
+import { FusionController } from './interfaces/FusionController'
 
 const ROUTES = {
   ai_airlock: {
@@ -374,6 +382,38 @@ const ROUTES = {
   guardian: {
     component: () => Guardian,
     scrollable: true,
+  },
+  miningdronecontrol: {
+    component: () => Miningdronecontrol,
+    scrollable: true,
+  },
+  artifact_machine: {
+    component: () => ArtifactMachine,
+    scrollable: false,
+  },
+  artifact_analyzer: {
+    component: () => ArtifactAnalyzer,
+    scrollable: false,
+  },
+  terraformer: {
+    component: () => Terraformer,
+    scrollable: false,
+  },
+  neutron_controller: {
+    component: () => NeutronController,
+    scrollable: true,
+  },
+  generator_controller: {
+    component: () => GeneratorController,
+    scrollable: true,
+  },
+  fuel_mixer: {
+    component: () => FuelMixer,
+    scrollable: false,
+  },
+  fusion_controller: {
+    component: () => FusionController,
+    scrollable: false,
   },
 };
 

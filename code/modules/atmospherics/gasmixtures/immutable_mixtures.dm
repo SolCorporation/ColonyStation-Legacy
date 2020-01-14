@@ -74,6 +74,8 @@
 	volume = CELL_VOLUME
 
 /datum/gas_mixture/immutable/planet/garbage_collect()
+	if(!SSterraforming.atmos)
+		return
 	initial_temperature = SSterraforming.atmos.getTemp()
 	..()
 

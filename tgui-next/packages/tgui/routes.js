@@ -70,13 +70,13 @@ import { VaultController } from './interfaces/VaultController';
 import { Wires } from './interfaces/Wires';
 import { Guardian } from './interfaces/Guardian';
 import { Miningdronecontrol } from './interfaces/Miningdronecontrol';
-import { ArtifactMachine} from './interfaces/ArtifactMachine';
+import { ArtifactMachine } from './interfaces/ArtifactMachine';
 import { ArtifactAnalyzer } from './interfaces/ArtifactAnalyzer';
 import { Terraformer } from './interfaces/Terraformer';
-import { NeutronController } from './interfaces/NeutronController'
-import { GeneratorController } from './interfaces/GeneratorController'
-import { FuelMixer } from './interfaces/FuelMixer'
-import { FusionController } from './interfaces/FusionController'
+import { NeutronController } from './interfaces/NeutronController';
+import { GeneratorController } from './interfaces/GeneratorController';
+import { FuelMixer } from './interfaces/FuelMixer';
+import { FusionController } from './interfaces/FusionController';
 
 const ROUTES = {
   ai_airlock: {

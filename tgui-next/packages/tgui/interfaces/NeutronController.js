@@ -12,9 +12,7 @@ export const NeutronController = props => {
         <Section title={value.injName}>
           <Box inline><b>Fuel Production Amount:</b> {value.fuelAmount}% per cycle</Box>
           <br /><br />
-          <Fragment>
-            <b>Installed upgrades:</b>
-          </Fragment>
+          <b>Installed upgrades:</b>
           <br />
           {map((value2, key) => (
             <Fragment>{value2.upNameN}<br /></Fragment>
@@ -28,9 +26,10 @@ export const NeutronController = props => {
             onClick={() => act('toggleFuel', { inj: value.inj })} />
           <br />
           <br />
-          <Button inline icon={!value.running && ("play") || ("stop")} content={!!value.running && ("Stop Fuel Production") || ("Start Fuel Production")}
-              selected={!!value.running}
-              onClick={() => act('toggleActive', { inj: value.inj })} />
+          <Button inline icon={!value.running && ("play") || ("stop")}
+            content={!!value.running && ("Stop Fuel Production") || ("Start Fuel Production")}
+            selected={!!value.running}
+            onClick={() => act('toggleActive', { inj: value.inj })} />
         </Section>
       ))(data.injector)}
     </Section>

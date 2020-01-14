@@ -12,17 +12,16 @@ export const GeneratorController = props => {
         <Section title={value.gName}>
           <Box inline><b>Generator Heat:</b></Box>
           <br />
-          <ProgressBar color={value.heat >= value.cutoff * 1.5 ? ("good") : value.heat >= value.cutoff ?("average") : ("bad")}
+          <ProgressBar
+            color={value.heat >= value.cutoff * 1.5 ? ("good") : value.heat >= value.cutoff ? ("average") : ("bad")}
             maxValue={value.maxHeat} value={value.heat} content={Math.round(value.heat) + "%"} />
           <br /><br />
           <Box inline><b>Generator Condition:</b></Box>
-            <br />
-            <ProgressBar color={value.condition >= 70 ? ("good") : value.condition >= 40 ?("average") : ("bad")}
-              maxValue={100} value={value.condition} content={Math.round(value.condition) + "%"} />
+          <br />
+          <ProgressBar color={value.condition >= 70 ? ("good") : value.condition >= 40 ?("average") : ("bad")}
+            maxValue={100} value={value.condition} content={Math.round(value.condition) + "%"} />
           <br /><br />
-          <Fragment>
-            <b>Installed upgrades:</b>
-          </Fragment>
+          <b>Installed upgrades:</b>
           <br />
           {map((value2, key) => (
             <Fragment>{value2.upNameG}<br /></Fragment>
@@ -34,11 +33,14 @@ export const GeneratorController = props => {
           <b>Status:</b> {value.status}
           <br /><br />
           <Button inline icon={!value.on && ("play") || ("stop")}
-              content={value.status == "SPINNING UP" || value.status == "STARTED" ? ("Stop Generator") :
-              value.status == "STOPPING" ? ("Generator Spinning down..") : ("Spin up Generator")}
-              selected={!!value.on && value.status != "STOPPING"}
-              disabled={value.status == "STOPPING"}
-              onClick={() => act('toggleOn', { G: value.gen })} />
+            content={value.status === "SPINNING UP" || value.status === "STARTED"
+              ? ("Stop Generator")
+              : value.status === "STOPPING"
+                ? ("Generator Spinning down..")
+                : ("Spin up Generator")}
+            selected={!!value.on && value.status !== "STOPPING"}
+            disabled={value.status === "STOPPING"}
+            onClick={() => act('toggleOn', { G: value.gen })} />
         </Section>
       ))(data.generator)}
     </Section>

@@ -8,38 +8,38 @@ export const ArtifactMachine = props => {
 
   return (
     <Section title={data.goodName}>
-        {!!data.art && (
-            <Fragment>
-            <Fragment><b>Status: </b>{data.status}<br /><br /></Fragment>
+      {!!data.art && (
+        <Fragment>
+          <Fragment><b>Status: </b>{data.status}<br /><br /></Fragment>
 
-            {!!data.running && (
-              <Fragment>Experiment Progress<br />
+          {!!data.running && (
+            <Fragment>Experiment Progress<br />
               <ProgressBar maxValue={data.max} value={data.ticksRemaining} content={data.timeRemaining + " second(s)"} />
               <br /><br />
-              <Button icon='stop'  disabled={!data.running}
-                content="Abort" onClick={() => act('abort')}/>
-              </Fragment>
-
-            ) || (
-              <Button icon='play' disabled={data.running}
-                content="Start Experiment" onClick={() => act('begin')}/>
-            )}
-            <br /><br />
-            <Button icon='eject' disabled={data.running}
-              content="Eject Artifact" onClick={() => act('eject')}/>
+              <Button icon="stop" disabled={!data.running}
+                content="Abort" onClick={() => act('abort')} />
             </Fragment>
-        ) || (
-          <Fragment><h2>No Artifact Inserted</h2></Fragment>
-        )}
-        <br />
-        <br />
-        <Fragment><b>Switch Operating Modes</b></Fragment>
-        <br />
-        {map((value, key) => (
-          <Button icon='cog' selected={data.curSpecific == value.ourSpecific}
-            content={value.specificName} onClick={() => act('specific', { newSpecific: value.ourSpecific })}/>
 
-        ))(data.specifics)}
+          ) || (
+            <Button icon="play" disabled={data.running}
+              content="Start Experiment" onClick={() => act('begin')} />
+          )}
+          <br /><br />
+          <Button icon="eject" disabled={data.running}
+            content="Eject Artifact" onClick={() => act('eject')} />
+        </Fragment>
+      ) || (
+        <h2>No Artifact Inserted</h2>
+      )}
+      <br />
+      <br />
+      <b>Switch Operating Modes</b>
+      <br />
+      {map((value, key) => (
+        <Button icon="cog" selected={data.curSpecific === value.ourSpecific}
+          content={value.specificName} onClick={() => act('specific', { newSpecific: value.ourSpecific })} />
+
+      ))(data.specifics)}
     </Section>
   );
 };

@@ -7,6 +7,7 @@
   ],
   "scripts": {
     "build": "eslint packages && cd packages/tgui && npx webpack --mode=production",
+    "build-fix": "eslint packages --fix && cd packages/tgui && npx webpack --mode=production",
     "watch": "cd packages/tgui-dev-server && node --experimental-modules index.js",
     "analyze": "cd packages/tgui && npx webpack --mode=production --env.analyze=1",
     "lint": "eslint packages"

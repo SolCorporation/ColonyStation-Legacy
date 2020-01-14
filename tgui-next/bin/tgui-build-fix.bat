@@ -1,5 +1,5 @@
 @echo off
 cd "%~dp0\.."
 call yarn install
-call yarn run build
-timeout /t 9
+call yarn run build-fix
+timeout /t 300

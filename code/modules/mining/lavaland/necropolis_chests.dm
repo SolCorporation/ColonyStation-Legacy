@@ -49,7 +49,7 @@
 		if(15)
 			new /obj/item/nullrod/armblade(src)
 		if(16)
-			new /obj/item/guardiancreator(src)
+			new /obj/item/guardiancreator/random(src)
 		if(17)
 			if(prob(50))
 				new /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe(src)
@@ -567,8 +567,8 @@
 /obj/item/book_of_babel/attack_self(mob/user)
 	if(!user.can_read(src))
 		return FALSE
-	to_chat(user, "You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.")
-	user.grant_all_languages(omnitongue=TRUE)
+	to_chat(user, "<span class='notice'>You flip through the pages of the book, quickly and conveniently learning every language in existence. Somewhat less conveniently, the aging book crumbles to dust in the process. Whoops.</span>")
+	user.grant_all_languages()
 	new /obj/effect/decal/cleanable/ash(get_turf(user))
 	qdel(src)
 
@@ -582,7 +582,7 @@
 /obj/item/reagent_containers/glass/bottle/potion/flight/syndicate
 	icon = 'icons/obj/lavaland/artefacts.dmi'
 	icon_state = "potionflask"
-	
+
 /obj/item/reagent_containers/glass/bottle/potion/flight
 	name = "strange elixir"
 	desc = "A flask with an almost-holy aura emitting from it. The label on the bottle says: 'erqo'hyy tvi'rf lbh jv'atf'."
@@ -602,16 +602,24 @@
 
 /datum/reagent/flightpotion/reaction_mob(mob/living/M, method=TOUCH, reac_volume, show_message = 1)
 	if(iscarbon(M) && M.stat != DEAD)
-		if(!ishumanbasic(M) || reac_volume < 5) // implying xenohumans are holy
+		var/mob/living/carbon/C = M
+		var/holycheck = ishumanbasic(C)
+		if(!(holycheck || islizard(C)) || reac_volume < 5) // implying xenohumans are holy //as with all things,
 			if(method == INGEST && show_message)
-				to_chat(M, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
+				to_chat(C, "<span class='notice'><i>You feel nothing but a terrible aftertaste.</i></span>")
 			return ..()
 
-		to_chat(M, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
-		M.set_species(/datum/species/angel)
-		playsound(M.loc, 'sound/items/poster_ripped.ogg', 50, 1, -1)
-		M.adjustBruteLoss(20)
-		M.emote("scream")
+		to_chat(C, "<span class='userdanger'>A terrible pain travels down your back as wings burst out!</span>")
+		C.dna.species.GiveSpeciesFlight(C)
+		if(holycheck)
+			to_chat(C, "<span class='notice'>You feel blessed!</span>")
+			ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
+		if(islizard(C))
+			to_chat(C, "span class='notice'>You feel blessed... by... something?</span>")
+			ADD_TRAIT(C, TRAIT_HOLY, SPECIES_TRAIT)
+		playsound(C.loc, 'sound/items/poster_ripped.ogg', 50, TRUE, -1)
+		C.adjustBruteLoss(20)
+		C.emote("scream")
 	..()
 
 

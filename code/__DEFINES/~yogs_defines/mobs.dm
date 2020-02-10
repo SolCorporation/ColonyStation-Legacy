@@ -28,6 +28,3 @@
 #define ANDROID_LEVEL_HUNGRY 250
 #define ANDROID_LEVEL_STARVING 150
 #define ANDROID_LEVEL_NONE 0
-
-#define ANDROID_NV_OFF 2 //numbers of tile they can see
-#define ANDROID_NV_ON 8

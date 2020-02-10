@@ -18,7 +18,7 @@ adjust_charge - take a positive or negative value to adjust the charge level
 	toxic_food = NONE
 	brutemod = 1.25
 	burnmod = 1.5
-	yogs_draw_robot_hair = TRUE
+	//yogs_draw_robot_hair = TRUE
 	mutanteyes = /obj/item/organ/eyes/android
 	mutantlungs = /obj/item/organ/lungs/android
 	yogs_virus_infect_chance = 20
@@ -27,8 +27,13 @@ adjust_charge - take a positive or negative value to adjust the charge level
 	var/eating_msg_cooldown = FALSE
 	var/emag_lvl = 0
 	var/power_drain = 0.5 //probably going to have to tweak this shit
-	var/tesliumtrip = FALSE
 	var/draining = FALSE
+
+	//Android menu
+	var/datum/operating_system/os
+	var/datum/action/innate/android_os/os_action
+
+
 	screamsound = 'goon/sound/robot_scream.ogg'
 
 /datum/species/android/on_species_gain(mob/living/carbon/C, datum/species/old_species, pref_load)
@@ -42,6 +47,12 @@ adjust_charge - take a positive or negative value to adjust the charge level
 			continue
 		BP.max_damage = 35
 	C.grant_language(/datum/language/machine) //learn it once,learn it forever i guess,this isnt removed on species loss to prevent curators from forgetting machine language
+	create_actions(C)
+
+/datum/species/android/proc/create_actions(mob/living/carbon/C)
+	os = new(src)
+	os_action = new(os)
+	os_action.Grant(C)
 
 /datum/species/android/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
 	. = ..()
@@ -52,7 +63,6 @@ adjust_charge - take a positive or negative value to adjust the charge level
 		BP.brute_reduction = initial(BP.brute_reduction)
 	C.clear_alert("android_emag") //this means a changeling can transform from and back to a android to clear the emag status but w/e i cant find a solution to not do that
 	C.clear_fullscreen("android_emag")
-	C.remove_movespeed_modifier("android_teslium")
 
 /datum/species/android/spec_emp_act(mob/living/carbon/human/H, severity)
 	. = ..()
@@ -91,30 +101,6 @@ adjust_charge - take a positive or negative value to adjust the charge level
 /datum/species/android/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	. = ..()
 
-	if(H.reagents.has_reagent("oil"))
-		H.adjustFireLoss(-2*REAGENTS_EFFECT_MULTIPLIER,FALSE,FALSE, BODYPART_ANY)
-
-	if(H.reagents.has_reagent("welding_fuel"))
-		H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER,FALSE,FALSE, BODYPART_ANY)
-
-	if(H.reagents.has_reagent("teslium",10)) //10 u otherwise it wont update and they will remain quikk
-		H.add_movespeed_modifier("android_teslium", update=TRUE, priority=101, multiplicative_slowdown=-2, blacklisted_movetypes=(FLYING|FLOATING))
-		if(H.health < 50 && H.health > 0)
-			H.adjustOxyLoss(-1*REAGENTS_EFFECT_MULTIPLIER)
-			H.adjustBruteLoss(-1*REAGENTS_EFFECT_MULTIPLIER,FALSE,FALSE, BODYPART_ANY)
-			H.adjustFireLoss(-1*REAGENTS_EFFECT_MULTIPLIER,FALSE,FALSE, BODYPART_ANY)
-		H.AdjustParalyzed(-3)
-		H.AdjustStun(-3)
-		H.AdjustKnockdown(-3)
-		H.adjustStaminaLoss(-5*REAGENTS_EFFECT_MULTIPLIER)
-		charge = CLAMP(charge - 10 * REAGENTS_METABOLISM,ANDROID_LEVEL_NONE,ANDROID_LEVEL_FULL)
-		burnmod = 200
-		tesliumtrip = TRUE
-	else if(tesliumtrip)
-		burnmod = initial(burnmod)
-		tesliumtrip = FALSE
-		H.remove_movespeed_modifier("android_teslium")
-
 	if (istype(chem,/datum/reagent/consumable))
 		var/datum/reagent/consumable/food = chem
 		if (food.nutriment_factor)
@@ -128,7 +114,6 @@ adjust_charge - take a positive or negative value to adjust the charge level
 	if(chem.current_cycle >= 20)
 		H.reagents.del_reagent(chem.type)
 
-
 	return FALSE
 
 /datum/species/android/spec_fully_heal(mob/living/carbon/human/H)
@@ -138,8 +123,6 @@ adjust_charge - take a positive or negative value to adjust the charge level
 	H.clear_alert("android_emag")
 	H.clear_fullscreen("android_emag")
 	burnmod = initial(burnmod)
-	tesliumtrip = FALSE
-	H.remove_movespeed_modifier("android_teslium") //full heal removes chems so it wont update the teslium speed up until they eat something
 
 /datum/species/android/spec_life(mob/living/carbon/human/H)
 	. = ..()

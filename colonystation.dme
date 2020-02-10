@@ -3318,6 +3318,7 @@
 #include "yogstation\code\modules\mob\living\carbon\human\species_types\lizard.dm"
 #include "yogstation\code\modules\mob\living\carbon\human\species_types\plantpeople.dm"
 #include "yogstation\code\modules\mob\living\carbon\human\species_types\android\android.dm"
+#include "yogstation\code\modules\mob\living\carbon\human\species_types\android\operating_system.dm"
 #include "yogstation\code\modules\mob\living\carbon\human\species_types\android\organs.dm"
 #include "yogstation\code\modules\mob\living\carbon\human\species_types\android\power_suck.dm"
 #include "yogstation\code\modules\mob\living\carbon\human\species_types\android\screen_alerts.dm"

@@ -77,7 +77,7 @@ import { NeutronController } from './interfaces/NeutronController';
 import { GeneratorController } from './interfaces/GeneratorController';
 import { FuelMixer } from './interfaces/FuelMixer';
 import { FusionController } from './interfaces/FusionController';
-import { OperatingSystem } from './interfaces/OperatingSystem'
+import { OperatingSystem } from './interfaces/OperatingSystem';
 
 const ROUTES = {
   ai_airlock: {
@@ -419,6 +419,7 @@ const ROUTES = {
   operating_system: {
     component: () => OperatingSystem,
     scrollable: true,
+    theme: 'ntos',
   },
 };
 

@@ -1,7 +1,7 @@
 /obj/item/organ/eyes/android
 	name = "android photon sensors"
 	desc = "A pair of experimental photon sensors. They function identically to human eyes."
-	lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
+	//lighting_alpha = LIGHTING_PLANE_ALPHA_MOSTLY_VISIBLE
 	//actions_types = list(/datum/action/item_action/organ_action/use)
 
 /*
@@ -49,3 +49,14 @@
 	heat_level_1_threshold = INFINITY
 	heat_level_2_threshold = INFINITY
 	heat_level_3_threshold = INFINITY
+
+/obj/item/organ/tongue/android
+	name = "vocal oscillator "
+	desc = "A mechanical contraption that creates sound waves mimicing voice."
+	icon_state = "tonguerobot"
+	say_mod = "intones"
+	taste_sensitivity = 0
+	modifies_speech = TRUE
+
+/obj/item/organ/tongue/android/handle_speech(datum/source, list/speech_args)
+	speech_args[SPEECH_SPANS] |= SPAN_ROBOT

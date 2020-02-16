@@ -10,28 +10,73 @@ adjust_charge - take a positive or negative value to adjust the charge level
 	id = "android"
 	default_color = "FFFFFF"
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
-	inherent_traits = list(TRAIT_NOHUNGER,TRAIT_RADIMMUNE)
-	species_traits = list(EYECOLOR,HAIR,LIPS)
+	inherent_traits = list(TRAIT_NOHUNGER, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE)
+
+	species_traits = list(EYECOLOR)
+
+	//Talking
 	say_mod = "intones"
 	attack_verb = "assault"
-	meat = /obj/item/reagent_containers/food/snacks/meat/slab/synthmeat
+
+	//Meat and food?
+	meat = null
 	toxic_food = NONE
+
+	//Not as strong
 	brutemod = 1.25
-	burnmod = 1.5
-	//yogs_draw_robot_hair = TRUE
+	burnmod = 1.25
+	//Our eyes!
 	mutanteyes = /obj/item/organ/eyes/android
 	mutantlungs = /obj/item/organ/lungs/android
-	yogs_virus_infect_chance = 20
-	virus_resistance_boost = 10 //YEOUTCH,good luck getting it out
-	var/charge = ANDROID_LEVEL_FULL
+	mutanttongue = /obj/item/organ/tongue/android
+
+
+	var/charge //Set on load to below value
+	var/max_charge = ANDROID_LEVEL_FULL
+
 	var/eating_msg_cooldown = FALSE
-	var/emag_lvl = 0
-	var/power_drain = 0.5 //probably going to have to tweak this shit
+
+
+	//Android power drain factors
+	//Staying alive
+	var/passive_power_drain = 0.5
+	//More CPU = More Power Usage
+	var/drain_per_cpu = 0.25
+	//Power consumption times this
+	var/power_modifier = 1
+	//CPUs that don't contribute to power calculation
+	var/exempt_cpus = 0
+
+	var/electricity_to_nutriment = 0.5 //1 power unit to 50 android charge they can uncharge an apc to 50% at most
+
+
 	var/draining = FALSE
 
 	//Android menu
-	var/datum/operating_system/os
-	var/datum/action/innate/android_os/os_action
+	var/datum/operating_system/os //Contains the UI
+	var/datum/action/innate/android_os/os_action //Access the above UI
+
+
+	//Android OS
+	var/can_uninstall = FALSE //Can we uninstall programs ourselves?
+	var/emagged = FALSE //Are we emagged? Gives access to emagged programs
+
+	var/active_programs = list() //What passive programs are currently running?
+	var/installed_programs = list() //What programs are installed? Passive + active
+	var/static/list/standard_programs = typecacheof(/datum/action/android_program/standard, TRUE) //List of all possible programs
+	var/static/list/emagged_programs = typecacheof(/datum/action/android_program/emagged, TRUE) //List of all possible programs when emagged
+
+	var/local_ram = 5 //How much ram do we ourselves?
+	var/external_ram = 0 //How much RAM are we getting from the Cloud? Cloud can fail
+
+	var/local_cpu = 1 //See above, but with CPU
+	var/external_cpu = 0 //See above, but with CPU
+
+	var/free_ram //How much RAM is free, and ready for usage?
+	var/free_cpu //How much CPU power is free?
+
+	var/can_use_guns = FALSE //Can we shoot guns?
+
 
 
 	screamsound = 'goon/sound/robot_scream.ogg'
@@ -48,6 +93,13 @@ adjust_charge - take a positive or negative value to adjust the charge level
 		BP.max_damage = 35
 	C.grant_language(/datum/language/machine) //learn it once,learn it forever i guess,this isnt removed on species loss to prevent curators from forgetting machine language
 	create_actions(C)
+	calculate_resources(C)
+	charge = max_charge
+
+/datum/species/android/proc/calculate_resources(mob/living/carbon/C)
+	free_ram = local_ram + external_ram
+	free_cpu = local_cpu + external_cpu
+
 
 /datum/species/android/proc/create_actions(mob/living/carbon/C)
 	os = new(src)
@@ -82,21 +134,14 @@ adjust_charge - take a positive or negative value to adjust the charge level
 			H.visible_message("<span class='danger'>A faint fizzling emanates from [H].</span>", \
 							"<span class='userdanger'>A fit of twitching overtakes you as your subdermal implants convulse violently from the electromagnetic disruption. Your sustenance reserves have been partially depleted from the blast.</span>")
 
+
 /datum/species/android/spec_emag_act(mob/living/carbon/human/H, mob/user)
 	. = ..()
-	if(emag_lvl == 2)
-		return
-	emag_lvl = min(emag_lvl + 1,2)
-	playsound(H.loc, 'sound/machines/warning-buzzer.ogg', 50, 1, 1)
-	H.Paralyze(60)
-	switch(emag_lvl)
-		if(1)
-			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 50) //HALP AM DUMB
-			to_chat(H,"<span class='danger'>ALERT! MEMORY UNIT [rand(1,5)] FAILURE.NERVEOUS SYSTEM DAMAGE.</span>")
-		if(2)
-			H.overlay_fullscreen("android_emag", /obj/screen/fullscreen/high)
-			H.throw_alert("android_emag", /obj/screen/alert/high/android)
-			to_chat(H,"<span class='danger'>ALERT! OPTIC SENSORS FAILURE.VISION PROCESSOR COMPROMISED.</span>")
+	if(do_after(H, 25, target = user))
+		emagged = TRUE
+		to_chat(user, "<span class='userdanger'>Foreign code injection detected.</span>")
+
+
 
 /datum/species/android/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
 	. = ..()
@@ -118,8 +163,7 @@ adjust_charge - take a positive or negative value to adjust the charge level
 
 /datum/species/android/spec_fully_heal(mob/living/carbon/human/H)
 	. = ..()
-	charge = ANDROID_LEVEL_FULL
-	emag_lvl = 0
+	charge = max_charge
 	H.clear_alert("android_emag")
 	H.clear_fullscreen("android_emag")
 	burnmod = initial(burnmod)
@@ -129,9 +173,15 @@ adjust_charge - take a positive or negative value to adjust the charge level
 	if(H.stat == DEAD)
 		return
 	handle_charge(H)
+	handle_programs(H)
+
+/datum/species/android/proc/get_power_usage()
+	var/used_cpu = (local_cpu + external_cpu) - free_cpu - exempt_cpus
+	return(passive_power_drain + (used_cpu * drain_per_cpu)) * power_modifier
+
 
 /datum/species/android/proc/handle_charge(mob/living/carbon/human/H)
-	charge = CLAMP(charge - power_drain,ANDROID_LEVEL_NONE,ANDROID_LEVEL_FULL)
+	charge = CLAMP(charge - get_power_usage(), ANDROID_LEVEL_NONE, ANDROID_LEVEL_FULL)
 	if(charge == ANDROID_LEVEL_NONE)
 		to_chat(H,"<span class='danger'>Warning! System power criti-$#@$</span>")
 		H.death()
@@ -143,3 +193,136 @@ adjust_charge - take a positive or negative value to adjust the charge level
 		H.throw_alert("android_charge", /obj/screen/alert/android_charge, 1)
 	else
 		H.clear_alert("android_charge")
+
+/datum/species/android/proc/handle_programs(mob/living/carbon/human/H)
+	//If this doesn't fix it something is wrong!
+	if(free_cpu > (local_cpu + external_cpu))
+		for(var/datum/action/android_program/P in active_programs)
+			if(P.stop_program(H))
+				if(free_cpu > (local_cpu + external_cpu))
+					continue
+				break
+	if(free_cpu > (local_cpu + external_cpu))
+		log_game("Android CPU mismatch. Local: [local_cpu] External: [external_cpu] Free CPU: [free_cpu]")
+
+	if(free_ram > (local_ram + external_ram))
+		for(var/datum/action/android_program/P in installed_programs)
+			if(P.active)
+				if(!P.stop_program(H))
+					continue
+			P.uninstall(H)
+			if(free_ram > (local_ram + external_ram))
+				continue
+			break
+
+	if(free_ram > (local_ram + external_ram))
+		log_game("Android RAM mismatch. Local: [local_ram] External: [external_ram] Free RAM: [free_ram]")
+
+/datum/species/android/proc/install(program_name, mob/living/carbon/human/H)
+	var/datum/action/android_program/program
+
+	for(var/path in standard_programs + emagged_programs)
+		var/datum/action/android_program/P = path
+		if(initial(P.name) == program_name)
+			program = new path
+			break
+
+	if(!program)
+		to_chat(H, "<span class='warning'>Program not located! This should not happen. Contact SolCorp support/Admins!</span>")
+		return
+
+	if(has_program(program))
+		to_chat(H, "<span class='warning'>Program already installed. Aborting.</span>")
+		return
+
+	if(program.install(H))
+		to_chat(H, "<span class='info'>[program.name] installed successfully.</span>")
+		return
+	to_chat(H, "<span class='warning'>Not enough RAM to install program..</span>")
+
+/datum/species/android/proc/run_program(program_name, mob/living/carbon/human/H)
+	var/datum/action/android_program/P = get_program(program_name)
+
+	if(!P)
+		to_chat(H, "<span class='warning'>Program not located! This should not happen. Contact SolCorp support/Admins!</span>")
+		return
+
+	if(P.attempt_run(H))
+		to_chat(H, "<span class='info'>[P.name] succesfully initiated.</span>")
+		return
+	to_chat(H, "<span class='warning'>Not enough CPU power available to run program.</span>")
+
+
+/datum/species/android/proc/stop(program_name, mob/living/carbon/human/H, force = FALSE)
+	var/datum/action/android_program/P = get_program(program_name)
+
+	if(!P)
+		to_chat(H, "<span class='warning'>Program not located! This should not happen. Contact SolCorp support/Admins!</span>")
+		return
+
+	if(P.stop_program(H))
+		if(force)
+			to_chat(H, "<span class='warning'>[P.name] forcefully stopped due to lack of CPU power.</span>")
+		else
+			to_chat(H, "<span class='info'>[P.name] succesfully stopped.</span>")
+		return
+
+	to_chat(H, "<span class='warning'>Program NOT stopped for unknown reason.</span>")
+
+/datum/species/android/proc/uninstall(program_name, mob/living/carbon/human/H, force = FALSE)
+	if(!can_uninstall)
+		return
+	var/datum/action/android_program/P = get_program(program_name)
+
+	if(!P)
+		to_chat(H, "<span class='warning'>Program not located! This should not happen. Contact SolCorp support/Admins!</span>")
+		return
+
+	if(P.uninstall(H))
+		if(force)
+			to_chat(H, "<span class='warning'>[P.name] uninstalled due to lack of RAM.</span>")
+		else
+			to_chat(H, "<span class='info'>[P.name] succesfully uninstalled.</span>")
+		return
+
+	to_chat(H, "<span class='warning'>Program NOT uninstalled for unknown reason.</span>")
+
+
+/datum/species/android/proc/has_program(datum/action/android_program/program)
+	for(var/P in installed_programs)
+		var/datum/action/android_program/otherprogram = P
+		if(initial(program.name) == otherprogram.name)
+			return TRUE
+	return FALSE
+
+/datum/species/android/proc/get_program(program_name)
+	for(var/P in installed_programs)
+		var/datum/action/android_program/otherprogram = P
+		if(program_name == otherprogram.name)
+			return otherprogram
+	return FALSE
+
+
+
+
+
+
+/datum/species/android/proc/get_cpu()
+	return local_cpu + external_cpu
+
+/datum/species/android/proc/get_ram()
+	return local_ram + external_ram
+
+/datum/species/android/proc/add_cpu(amount = 1, external = FALSE)
+	if(external)
+		external_cpu += amount
+	else
+		local_cpu += amount
+	free_cpu += amount
+
+/datum/species/android/proc/add_ram(amount = 1, external = FALSE)
+	if(external)
+		external_ram += amount
+	else
+		local_ram += amount
+	free_ram += amount

@@ -18,7 +18,7 @@
 	if(H.reagents.has_reagent("teslium"))
 		siemens_coefficient *= 1.5
 
-	if (charge >= ANDROID_LEVEL_FULL - 25) //just to prevent spam a bit
+	if (charge >= max_charge - 25) //just to prevent spam a bit
 		to_chat(H,"<span class='notice'>CONSUME protocol reports no need for additional power at this time.</span>")
 		draining = FALSE
 		return TRUE
@@ -54,11 +54,11 @@
 
 	while(!done)
 		cycle++
-		var/nutritionIncrease = drain * ELECTRICITY_TO_NUTRIMENT_FACTOR
+		var/nutritionIncrease = drain * electricity_to_nutriment
 
-		if(charge + nutritionIncrease > ANDROID_LEVEL_FULL)
-			nutritionIncrease = CLAMP(ANDROID_LEVEL_FULL - charge, ANDROID_LEVEL_NONE,ANDROID_LEVEL_FULL) //if their nutrition goes up from some other source, this could be negative, which would cause bad things to happen.
-			drain = nutritionIncrease/ELECTRICITY_TO_NUTRIMENT_FACTOR
+		if(charge + nutritionIncrease > max_charge)
+			nutritionIncrease = CLAMP(max_charge - charge, ANDROID_LEVEL_NONE, max_charge) //if their nutrition goes up from some other source, this could be negative, which would cause bad things to happen.
+			drain = nutritionIncrease / electricity_to_nutriment
 
 		if (do_after(H,5, target = A))
 			var/can_drain = A.can_consume_power_from()
@@ -74,14 +74,14 @@
 				if(drained < drain)
 					to_chat(H,"<span class='info'>[A]'s power has been depleted, CONSUME protocol halted.</span>")
 					done = TRUE
-				charge = CLAMP(charge + (drained * ELECTRICITY_TO_NUTRIMENT_FACTOR),ANDROID_LEVEL_NONE,ANDROID_LEVEL_FULL)
+				charge = CLAMP(charge + (drained * electricity_to_nutriment), ANDROID_LEVEL_NONE, max_charge)
 
 				if(!done)
-					if(charge > (ANDROID_LEVEL_FULL - 25))
+					if(charge > (max_charge - 25))
 						to_chat(H,"<span class='info'>CONSUME protocol complete. Physical nourishment refreshed.</span>")
 						done = TRUE
 					else if(!(cycle % 4))
-						var/nutperc = round((charge / ANDROID_LEVEL_FULL) * 100)
+						var/nutperc = round((charge / max_charge) * 100)
 						to_chat(H,"<span class='info'>CONSUME protocol continues. Current satiety level: [nutperc]%.</span>")
 		else
 			done = TRUE

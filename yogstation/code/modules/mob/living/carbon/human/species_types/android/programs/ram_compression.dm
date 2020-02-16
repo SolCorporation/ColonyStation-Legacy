@@ -17,7 +17,7 @@
 	active = TRUE
 	A.active_programs += src
 
-	A.local_ram += 5
+	A.add_ram(5)
 
 	return TRUE
 
@@ -27,6 +27,6 @@
 	if(!A)
 		return FALSE
 
-	A.local_ram -= 5
+	A.remove_ram(5)
 
 	return TRUE

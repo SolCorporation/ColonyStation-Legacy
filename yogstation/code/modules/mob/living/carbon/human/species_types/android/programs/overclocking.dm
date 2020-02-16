@@ -17,7 +17,7 @@
 	active = TRUE
 	A.active_programs += src
 
-	A.local_cpu++
+	A.add_cpu()
 	A.power_modifier += 0.25
 
 	return TRUE
@@ -28,7 +28,7 @@
 	if(!A)
 		return FALSE
 
-	A.local_cpu--
+	A.remove_cpu()
 	A.power_modifier -= 0.25
 
 	return TRUE

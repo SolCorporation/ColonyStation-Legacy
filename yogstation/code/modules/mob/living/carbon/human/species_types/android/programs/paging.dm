@@ -17,7 +17,7 @@
 	active = TRUE
 	A.active_programs += src
 
-	A.local_cpu++
+	A.add_cpu()
 
 	return TRUE
 
@@ -26,6 +26,6 @@
 	var/datum/species/android/A = get_species(user, /datum/species/android)
 	if(!A)
 		return FALSE
-	A.local_cpu--
+	A.remove_cpu()
 
 	return TRUE

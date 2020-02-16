@@ -78,6 +78,9 @@ adjust_charge - take a positive or negative value to adjust the charge level
 	var/can_use_guns = FALSE //Can we shoot guns?
 
 
+	//Debug
+	var/cpu_warn
+	var/ram_warn
 
 	screamsound = 'goon/sound/robot_scream.ogg'
 
@@ -194,21 +197,29 @@ adjust_charge - take a positive or negative value to adjust the charge level
 	else
 		H.clear_alert("android_charge")
 
-/datum/species/android/proc/handle_programs(mob/living/carbon/human/H)
+/datum/species/android/proc/handle_programs(mob/living/carbon/human/HU)
 	//If this doesn't fix it something is wrong!
-	if(free_cpu > (local_cpu + external_cpu))
+	var/datum/species/android/H = get_species(HU, /datum/species/android)
+	if(!H)
+		return
+
+	if(free_cpu > (local_cpu + external_cpu) || free_cpu < 0)
 		for(var/datum/action/android_program/P in active_programs)
-			if(P.stop_program(H))
+			if(P.needs_button)
+				continue
+			if(H.stop(P.name, TRUE))
 				if(free_cpu > (local_cpu + external_cpu))
 					continue
 				break
 	if(free_cpu > (local_cpu + external_cpu))
-		log_game("Android CPU mismatch. Local: [local_cpu] External: [external_cpu] Free CPU: [free_cpu]")
+		if(!cpu_warn)
+			log_game("Android CPU mismatch. Local: [local_cpu] External: [external_cpu] Free CPU: [free_cpu]")
+			cpu_warn = TRUE
 
-	if(free_ram > (local_ram + external_ram))
+	if(free_ram > (local_ram + external_ram) || free_ram < 0)
 		for(var/datum/action/android_program/P in installed_programs)
 			if(P.active)
-				if(!P.stop_program(H))
+				if(!H.stop(P.name, TRUE))
 					continue
 			P.uninstall(H)
 			if(free_ram > (local_ram + external_ram))
@@ -216,7 +227,9 @@ adjust_charge - take a positive or negative value to adjust the charge level
 			break
 
 	if(free_ram > (local_ram + external_ram))
-		log_game("Android RAM mismatch. Local: [local_ram] External: [external_ram] Free RAM: [free_ram]")
+		if(!ram_warn)
+			log_game("Android RAM mismatch. Local: [local_ram] External: [external_ram] Free RAM: [free_ram]")
+			ram_warn = TRUE
 
 /datum/species/android/proc/install(program_name, mob/living/carbon/human/H)
 	var/datum/action/android_program/program
@@ -266,8 +279,8 @@ adjust_charge - take a positive or negative value to adjust the charge level
 		else
 			to_chat(H, "<span class='info'>[P.name] succesfully stopped.</span>")
 		return
-
-	to_chat(H, "<span class='warning'>Program NOT stopped for unknown reason.</span>")
+	if(!force)
+		to_chat(H, "<span class='warning'>Program NOT stopped for unknown reason.</span>")
 
 /datum/species/android/proc/uninstall(program_name, mob/living/carbon/human/H, force = FALSE)
 	if(!can_uninstall)
@@ -285,7 +298,8 @@ adjust_charge - take a positive or negative value to adjust the charge level
 			to_chat(H, "<span class='info'>[P.name] succesfully uninstalled.</span>")
 		return
 
-	to_chat(H, "<span class='warning'>Program NOT uninstalled for unknown reason.</span>")
+	if(!force)
+		to_chat(H, "<span class='warning'>Program NOT uninstalled for unknown reason.</span>")
 
 
 /datum/species/android/proc/has_program(datum/action/android_program/program)
@@ -326,3 +340,17 @@ adjust_charge - take a positive or negative value to adjust the charge level
 	else
 		local_ram += amount
 	free_ram += amount
+
+/datum/species/android/proc/remove_cpu(amount = 1, external = FALSE)
+	if(external)
+		external_cpu -= amount
+	else
+		local_cpu -= amount
+	free_cpu -= amount
+
+/datum/species/android/proc/remove_ram(amount = 1, external = FALSE)
+	if(external)
+		external_ram -= amount
+	else
+		local_ram -= amount
+	free_ram -= amount

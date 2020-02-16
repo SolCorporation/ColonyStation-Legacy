@@ -7,18 +7,19 @@ import { Button, ColorBox, Section, Table, NoticeBox } from '../components';
 
 export const OperatingSystem = props => {
   const { act, data } = useBackend(props);
-  const available_programs_filtered = [];
+  let available_programs_filtered = [];
 
   // Dirty filtering. Done to avoid spamming the UI with all the available programs all the time
   for (let i = 0; i < data.available_programs.length; i++) {
-    if (data.installed_programs_text.length === 0) {
-      available_programs_filtered.push(data.available_programs[i]);
-      continue;
-    }
+    let pass = true
     for (let i2 = 0; i2 < data.installed_programs_text.length; i2++) {
-      if (data.available_programs[i].name !== data.installed_programs_text[i2]) {
-        available_programs_filtered.push(data.available_programs[i]);
+      if (data.available_programs[i].name === data.installed_programs_text[i2]) {
+        pass = false
+        break
       }
+    }
+    if(pass) {
+      available_programs_filtered.push(data.available_programs[i]);
     }
   }
 

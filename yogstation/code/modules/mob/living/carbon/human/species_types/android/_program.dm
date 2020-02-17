@@ -138,9 +138,9 @@
 			A.free_ram += ram_cost
 			A.installed_programs -= src
 			return TRUE
+
 		if(stop_program(user))
 			A.free_ram += ram_cost
 			A.installed_programs -= src
 			return TRUE
-
 	return FALSE

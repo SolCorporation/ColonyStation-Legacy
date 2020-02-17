@@ -215,10 +215,6 @@ adjust_charge - take a positive or negative value to adjust the charge level
 	if(free_ram > (local_ram + external_ram) || free_ram < 0)
 
 		for(var/datum/action/android_program/P in installed_programs)
-			if(P.active)
-				if(!H.stop(P.name, HU, TRUE))
-					continue
-
 			H.uninstall(P.name, HU, TRUE)
 			if(free_ram > (local_ram + external_ram))
 				continue
@@ -281,14 +277,13 @@ adjust_charge - take a positive or negative value to adjust the charge level
 		to_chat(H, "<span class='warning'>Program NOT stopped for unknown reason.</span>")
 
 /datum/species/android/proc/uninstall(program_name, mob/living/carbon/human/H, force = 0)
-	if(!can_uninstall)
+	if(!can_uninstall && !force)
 		return
 	var/datum/action/android_program/P = get_program(program_name)
 
 	if(!P)
 		to_chat(H, "<span class='warning'>Program not located! This should not happen. Contact SolCorp support/Admins!</span>")
 		return
-
 	if(P.uninstall(H))
 		if(force == 2)
 			to_chat(H, "<span class='warning'>[P.name] forcefully uninstalled.</span>")

@@ -75,6 +75,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	name = "Cargo Technician"
 	icon_state = "Cargo Technician"
 
+
 /obj/effect/landmark/start/bartender
 	name = "Bartender"
 	icon_state = "Bartender"
@@ -185,6 +186,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/start/cyborg
 	name = "Cyborg"
+	icon_state = "Cyborg"
+
+/obj/effect/landmark/start/android
+	name = "Android"
 	icon_state = "Cyborg"
 
 /obj/effect/landmark/start/ai
@@ -303,7 +308,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark/start/new_player)
 	GLOB.xeno_spawn += loc
 	return INITIALIZE_HINT_QDEL
 
-//objects with the stationloving component (nuke disk) respawn here. 
+//objects with the stationloving component (nuke disk) respawn here.
 //also blobs that have their spawn forcemoved (running out of time when picking their spawn spot), santa and respawning devils
 /obj/effect/landmark/blobstart
 	name = "blobstart"

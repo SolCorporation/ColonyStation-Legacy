@@ -23,8 +23,6 @@
 /datum/operating_system
 	var/name = "Operating System"
 	var/datum/species/android/android
-	var/ui_data_static //REMOVE
-	var/ui_data //REMOVE
 
 /datum/operating_system/New(new_android)
 	. = ..()
@@ -71,7 +69,6 @@
 
 	data["can_uninstall"] = android.can_uninstall
 
-	ui_data = data //REMOVE
 
 	return data
 
@@ -89,10 +86,9 @@
 
 	for(var/path in android.emagged_programs)
 		var/datum/action/android_program/P = new path
-		data["emagged_programs"] += list("name" = P.name, "desc" = P.pdesc, "cpu_cost" = P.cpu_cost, "ram_cost" = P.ram_cost)
+		data["emagged_programs"] += list(list("name" = P.name, "desc" = P.pdesc, "cpu_cost" = P.cpu_cost, "ram_cost" = P.ram_cost))
 		qdel(P)
 
-	ui_data_static = data //REMOVE
 	return data
 
 /datum/operating_system/ui_act(action, params)

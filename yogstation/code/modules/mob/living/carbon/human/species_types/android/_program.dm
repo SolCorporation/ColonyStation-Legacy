@@ -81,6 +81,7 @@
 
 	if(!active)
 		return FALSE
+
 	active = FALSE
 
 	A.free_cpu += cpu_cost
@@ -91,6 +92,10 @@
 	var/datum/species/android/A = get_species(user, /datum/species/android)
 	if(!A)
 		return FALSE
+
+	if(!awaiting_callback)
+		return FALSE
+
 	A.free_cpu += cpu_cost
 
 	awaiting_callback = FALSE
@@ -121,10 +126,21 @@
 	var/datum/species/android/A = get_species(user, /datum/species/android)
 	if(!A)
 		return FALSE
-	if(stop_program(user))
+
+	if(needs_button)
+		stop_active_program(user)
+		Remove(user)
 		A.free_ram += ram_cost
 		A.installed_programs -= src
-		if(needs_button)
-			Remove(user)
 		return TRUE
+	else
+		if(!active)
+			A.free_ram += ram_cost
+			A.installed_programs -= src
+			return TRUE
+		if(stop_program(user))
+			A.free_ram += ram_cost
+			A.installed_programs -= src
+			return TRUE
+
 	return FALSE

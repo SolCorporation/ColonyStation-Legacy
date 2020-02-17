@@ -138,12 +138,6 @@ adjust_charge - take a positive or negative value to adjust the charge level
 							"<span class='userdanger'>A fit of twitching overtakes you as your subdermal implants convulse violently from the electromagnetic disruption. Your sustenance reserves have been partially depleted from the blast.</span>")
 
 
-/datum/species/android/spec_emag_act(mob/living/carbon/human/H, mob/user)
-	. = ..()
-	if(do_after(H, 25, target = user))
-		emagged = TRUE
-		to_chat(user, "<span class='userdanger'>Foreign code injection detected.</span>")
-
 
 
 /datum/species/android/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H)
@@ -221,7 +215,7 @@ adjust_charge - take a positive or negative value to adjust the charge level
 			if(P.active)
 				if(!H.stop(P.name, TRUE))
 					continue
-			P.uninstall(H)
+			H.uninstall(P.name, H, 1)
 			if(free_ram > (local_ram + external_ram))
 				continue
 			break
@@ -282,7 +276,7 @@ adjust_charge - take a positive or negative value to adjust the charge level
 	if(!force)
 		to_chat(H, "<span class='warning'>Program NOT stopped for unknown reason.</span>")
 
-/datum/species/android/proc/uninstall(program_name, mob/living/carbon/human/H, force = FALSE)
+/datum/species/android/proc/uninstall(program_name, mob/living/carbon/human/H, force = 0)
 	if(!can_uninstall)
 		return
 	var/datum/action/android_program/P = get_program(program_name)
@@ -292,7 +286,9 @@ adjust_charge - take a positive or negative value to adjust the charge level
 		return
 
 	if(P.uninstall(H))
-		if(force)
+		if(force == 2)
+			to_chat(H, "<span class='warning'>[P.name] forcefully uninstalled.</span>")
+		else if(force == 1)
 			to_chat(H, "<span class='warning'>[P.name] uninstalled due to lack of RAM.</span>")
 		else
 			to_chat(H, "<span class='info'>[P.name] succesfully uninstalled.</span>")
@@ -354,3 +350,42 @@ adjust_charge - take a positive or negative value to adjust the charge level
 	else
 		local_ram -= amount
 	free_ram -= amount
+
+
+
+//Clearing programs
+/datum/species/android/spec_attacked_by(obj/item/I, mob/living/user, obj/item/bodypart/affecting, intent, mob/living/carbon/human/H)
+
+	if(user == H)
+		return ..()
+
+	if(istype(I, /obj/item/multitool))
+		to_chat(H, "<span class='userdanger'>WARNING. Entering maintenance mode. Disabling OS sandbox</span>")
+		to_chat(user, "<span class='info'>Temporarily disabling OS sandbox...</span>")
+		if(do_after(user, 75, target = H))
+			to_chat(H, "<span class='userdanger'>Running command: rm -rf. Wiping all programs...</span>")
+			to_chat(user, "<span class='info'>Reinstalling OS from ROM</span>")
+			if(do_after(user, 150, target = H))
+				to_chat(H, "<span class='userdanger'>OS reset. Programs deleted.</span>")
+				to_chat(user, "<span class='info'>Operation completed</span>")
+				emagged = FALSE
+				can_use_guns = FALSE
+				for(var/datum/action/android_program/P in installed_programs)
+					P.uninstall(H)
+
+
+		return FALSE
+
+	..()
+
+/datum/species/android/spec_emag_act(mob/living/carbon/human/H, mob/user)
+	if(emagged)
+		to_chat(user, "<span class='warning'>ACCESS DENIED</span>")
+		return
+
+	to_chat(user, "<span class='info'>Beginning code injection...</span>")
+	to_chat(H, "<span class='userdanger'>Foreign code injection detected.</span>")
+	if(do_after(user, 150, target = H))
+		emagged = TRUE
+		to_chat(user, "<span class='info'>Code injection complete...</span>")
+		to_chat(H, "<span class='userdanger'>Foreign code injec--- ERROR 463 ERROR 21... Welcome to SyndieOS.</span>")

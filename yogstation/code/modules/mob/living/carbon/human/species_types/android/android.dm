@@ -183,8 +183,11 @@ adjust_charge - take a positive or negative value to adjust the charge level
 		H.death()
 	else if(charge < ANDROID_LEVEL_STARVING)
 		H.throw_alert("android_charge", /obj/screen/alert/android_charge, 3)
+		stop_all_passive_programs(H)
+		to_chat(H, "<span class='userdanger'>Power levels dangerously low. Recharge required immediately. All passive programs have been disabled to conserve power.</span>")
 	else if(charge < ANDROID_LEVEL_HUNGRY)
 		H.throw_alert("android_charge", /obj/screen/alert/android_charge, 2)
+		to_chat(H, "<span class='warning'>Power levels getting low. Recharge required in the near future.</span>")
 	else if(charge < ANDROID_LEVEL_FED)
 		H.throw_alert("android_charge", /obj/screen/alert/android_charge, 1)
 	else
@@ -388,3 +391,9 @@ adjust_charge - take a positive or negative value to adjust the charge level
 		emagged = TRUE
 		to_chat(user, "<span class='info'>Code injection complete...</span>")
 		to_chat(H, "<span class='userdanger'>Foreign code injec--- ERROR 463 ERROR 21... Welcome to SyndieOS.</span>")
+
+/datum/species/android/proc/stop_all_passive_programs(mob/living/carbon/human/H)
+	for(var/datum/action/android_program/P in active_programs)
+		if(P.needs_button)
+			continue
+		stop(P.name, H, TRUE)

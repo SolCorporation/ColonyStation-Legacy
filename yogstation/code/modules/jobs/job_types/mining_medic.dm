@@ -17,6 +17,9 @@
 	paycheck_department = ACCOUNT_MED
 	display_order = JOB_DISPLAY_ORDER_MINING_MEDIC
 
+/datum/job/miningmedic/config_check()
+	return FALSE
+
 /datum/outfit/job/miningmedic
 	name = "Mining Medic"
 	jobtype = /datum/job/miningmedic

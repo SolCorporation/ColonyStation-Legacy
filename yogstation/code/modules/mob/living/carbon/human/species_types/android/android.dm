@@ -201,10 +201,11 @@ adjust_charge - take a positive or negative value to adjust the charge level
 		for(var/datum/action/android_program/P in active_programs)
 			if(P.needs_button)
 				continue
-			if(H.stop(P.name, TRUE))
+			if(H.stop(P.name, H, TRUE))
 				if(free_cpu > (local_cpu + external_cpu))
 					continue
 				break
+
 	if(free_cpu > (local_cpu + external_cpu))
 		if(!cpu_warn)
 			log_game("Android CPU mismatch. Local: [local_cpu] External: [external_cpu] Free CPU: [free_cpu]")
@@ -213,7 +214,7 @@ adjust_charge - take a positive or negative value to adjust the charge level
 	if(free_ram > (local_ram + external_ram) || free_ram < 0)
 		for(var/datum/action/android_program/P in installed_programs)
 			if(P.active)
-				if(!H.stop(P.name, TRUE))
+				if(!H.stop(P.name, H, TRUE))
 					continue
 			H.uninstall(P.name, H, 1)
 			if(free_ram > (local_ram + external_ram))

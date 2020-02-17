@@ -8,7 +8,7 @@ import { Button, ColorBox, Section, Table, NoticeBox } from '../components';
 export const OperatingSystem = props => {
   const { act, data } = useBackend(props);
   let available_programs_filtered = [];
-  let test = "test1"
+
   // Dirty filtering. Done to avoid spamming the UI with all the available programs all the time
   for (let i = 0; i < data.available_programs.length; i++) {
     let pass = true
@@ -22,11 +22,11 @@ export const OperatingSystem = props => {
       available_programs_filtered.push(data.available_programs[i]);
     }
   }
-    test = data.emagged_programs.length
+
   for (let i = 0; i < data.emagged_programs.length; i++) {
-    test = "test3"
+
     let pass = true
-    if(!!data.emagged) pass = false
+    if(!data.emagged) pass = false
     for (let i2 = 0; i2 < data.installed_programs_text.length; i2++) {
       if (data.emagged_programs[i].name === data.installed_programs_text[i2]) {
         pass = false
@@ -34,7 +34,6 @@ export const OperatingSystem = props => {
       }
     }
     if(pass) {
-      test = "test2"
       available_programs_filtered.push(data.emagged_programs[i]);
     }
   }
@@ -43,7 +42,6 @@ export const OperatingSystem = props => {
   return (
     <Fragment>
       <Section title="Dashboard">
-        {test}
         {!!data.emagged && (
           <NoticeBox>Malicious Foreign Code Detected</NoticeBox>
         )}

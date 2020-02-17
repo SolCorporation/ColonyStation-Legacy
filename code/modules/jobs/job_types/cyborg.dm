@@ -16,6 +16,9 @@
 
 	changed_maps = list("MinskyStation")
 
+/datum/job/cyborg/config_check()
+	return FALSE
+
 /datum/job/cyborg/proc/MinskyStationChanges()
 	spawn_positions = 2
 

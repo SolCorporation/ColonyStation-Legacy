@@ -12,8 +12,7 @@ adjust_charge - take a positive or negative value to adjust the charge level
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	inherent_traits = list(TRAIT_NOHUNGER, TRAIT_RADIMMUNE, TRAIT_VIRUSIMMUNE)
 
-	species_traits = list(EYECOLOR)
-
+	species_traits = list(EYECOLOR, NOBLOOD)
 	//Talking
 	say_mod = "intones"
 	attack_verb = "assault"
@@ -198,10 +197,12 @@ adjust_charge - take a positive or negative value to adjust the charge level
 		return
 
 	if(free_cpu > (local_cpu + external_cpu) || free_cpu < 0)
+
 		for(var/datum/action/android_program/P in active_programs)
 			if(P.needs_button)
 				continue
-			if(H.stop(P.name, H, TRUE))
+
+			if(H.stop(P.name, HU, TRUE))
 				if(free_cpu > (local_cpu + external_cpu))
 					continue
 				break
@@ -212,11 +213,13 @@ adjust_charge - take a positive or negative value to adjust the charge level
 			cpu_warn = TRUE
 
 	if(free_ram > (local_ram + external_ram) || free_ram < 0)
+
 		for(var/datum/action/android_program/P in installed_programs)
 			if(P.active)
-				if(!H.stop(P.name, H, TRUE))
+				if(!H.stop(P.name, HU, TRUE))
 					continue
-			H.uninstall(P.name, H, 1)
+
+			H.uninstall(P.name, HU, TRUE)
 			if(free_ram > (local_ram + external_ram))
 				continue
 			break

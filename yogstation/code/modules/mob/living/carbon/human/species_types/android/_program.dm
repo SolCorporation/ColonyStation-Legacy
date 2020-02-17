@@ -56,7 +56,6 @@
 	if(!user || !user.mind || !isandroid(user))
 		return
 	if(!attempt_run(user))
-		to_chat(owner, "<span class='warning'>Not enough CPU power available to run program.</span>")
 		return
 
 //Try to run it.
@@ -118,6 +117,7 @@
 		return FALSE
 
 	if(cpu_cost > A.free_cpu)
+		to_chat(owner, "<span class='warning'>Not enough CPU power available to run program.</span>")
 		return FALSE
 
 	return TRUE

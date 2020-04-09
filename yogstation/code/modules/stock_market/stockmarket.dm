@@ -70,6 +70,7 @@
 		var/sname = ""
 		switch (rand(1,6))
 			if(1)
+				//This prevents the name from appearing in game, and makes sure a name is selected
 				while (sname == "" || sname == "FAG") // honestly it's a 0.6% chance per round this happens - or once in 166 rounds - so i'm accounting for it before someone yells at me
 					sname = "[consonant()][vowel()][consonant()]"
 			if (2)

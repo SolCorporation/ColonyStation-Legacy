@@ -45,6 +45,9 @@
 #define WARNING_2 2
 #define WARNING_3 3
 
+#define TOP 0
+#define BOTTOM 1
+
 /obj/machinery/power/fusion
 	density = TRUE
 	opacity = TRUE
@@ -54,6 +57,9 @@
 	desc = "This little thing controls the whole reactor, without it there is no power."
 	icon = 'goon/icons/obj/fusion_machines.dmi'
 	icon_state = "core"
+
+	//is the core at the top or bottom?
+	var/part_base = TOP
 
 	var/list/parts = list()
 
@@ -349,8 +355,13 @@
 
 /obj/machinery/power/fusion/core/proc/setup_parts()
 	var/turf/our_turf = get_turf(src)
-	// 9x9 block obtained from the bottom middle of the block
-	var/list/spawn_turfs = block(locate(our_turf.x - 1, our_turf.y + 2, our_turf.z), locate(our_turf.x + 1, our_turf.y, our_turf.z))
+	// 9x9 block obtained from the top middle of the block
+	var/list/spawn_turfs
+	if(part_base == TOP)
+		spawn_turfs = block(locate(our_turf.x - 1, our_turf.y - 2, our_turf.z), locate(our_turf.x + 1, our_turf.y, our_turf.z))
+	else
+		spawn_turfs = block(locate(our_turf.x - 1, our_turf.y + 2, our_turf.z), locate(our_turf.x + 1, our_turf.y, our_turf.z))
+
 	var/count = 10
 	for(var/turf/T in spawn_turfs)
 		count--
@@ -419,3 +430,5 @@
 #undef DEUTERIUM_OUTPUT_BOOST
 #undef DEUTERIUM_BASE_OUTPUT
 #undef HEAT_REDUCTION_ON_OUTPUT
+#undef TOP
+#undef BOTTOM

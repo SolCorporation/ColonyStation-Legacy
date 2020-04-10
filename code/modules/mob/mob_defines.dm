@@ -106,3 +106,5 @@
 	var/registered_z
 	
 	var/memory_amt = 0
+	///Whether the mob is updating glide size when movespeed updates or not
+	var/updating_glide_size = TRUE

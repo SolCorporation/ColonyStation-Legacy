@@ -166,7 +166,8 @@
 	if(origin && istype(origin, /datum/spacevine_mutation) && isvineimmune(src))
 		return
 	..()
-
+	if(QDELETED(src))
+		return
 	switch (severity)
 		if (1)
 			gib()

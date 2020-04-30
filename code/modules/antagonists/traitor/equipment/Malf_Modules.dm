@@ -107,7 +107,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/AI_Module))
 	var/datum/action/innate/ai/ranged/attached_action
 
 /obj/effect/proc_holder/ranged_ai/Destroy()
-	QDEL_NULL(attached_action)
+	attached_action = null
 	return ..()
 
 /obj/effect/proc_holder/ranged_ai/proc/toggle(mob/user)

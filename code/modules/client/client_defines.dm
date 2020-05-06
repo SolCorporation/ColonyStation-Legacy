@@ -86,3 +86,5 @@
 
 	//rate limiting for the crew manifest
 	var/crew_manifest_delay
+	
+	var/list/spell_tabs = list()

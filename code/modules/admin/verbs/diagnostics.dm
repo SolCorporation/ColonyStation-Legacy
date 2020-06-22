@@ -13,7 +13,7 @@
 		var/moles = gas[MOLES]
 		if (moles >= 0.00001)
 			lines += "[gas[GAS_META][META_GAS_NAME]]: [moles] mol"
-	to_chat(usr, lines.Join("\n"))
+	to_chat(usr, lines.Join("\n"), confidential=TRUE)
 
 /client/proc/air_status(turf/target)
 	set category = "Debug"
@@ -59,7 +59,7 @@
 	set category = "Debug"
 	set name = "Radio report"
 
-	var/output = "<b>Radio Report</b><hr>"
+	var/output = "<HTML><HEAD><meta charset='UTF-8'></HEAD><BODY><b>Radio Report</b><hr>"
 	for (var/fq in SSradio.frequencies)
 		output += "<b>Freq: [fq]</b><br>"
 		var/datum/radio_frequency/fqs = SSradio.frequencies[fq]
@@ -79,6 +79,7 @@
 				else
 					output += "&nbsp;&nbsp;&nbsp;&nbsp;[device]<br>"
 
+	output += "</BODY></HTML>"
 	usr << browse(output,"window=radioreport")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Show Radio Report") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 

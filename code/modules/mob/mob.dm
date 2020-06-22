@@ -80,7 +80,7 @@
 	if(!client)
 		return
 
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 
 	if(type)
 		if(type & 1 && eye_blind )//Vision related
@@ -260,7 +260,7 @@
 /mob/proc/reset_perspective(atom/A)
 	if(client)
 		if(A)
-			if(ismovableatom(A))
+			if(ismovable(A))
 				//Set the the thing unless it's us
 				if(A != src)
 					client.perspective = EYE_PERSPECTIVE
@@ -400,7 +400,7 @@
 		
 	memory_amt++
 
-	msg = copytext(msg, 1, MAX_MESSAGE_LEN)
+	msg = copytext_char(msg, 1, MAX_MESSAGE_LEN)
 	msg = sanitize(msg)
 
 	if(mind)

@@ -404,7 +404,7 @@
 	item_state = "wiz_helm"
 	item_color = "wiz"
 	resistance_flags = FIRE_PROOF | ACID_PROOF //No longer shall our kind be foiled by lone chemists with spray bottles!
-	armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 20, "bomb" = 35, "bio" = 100, "rad" = 50, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 25, "bio" = 100, "rad" = 50, "fire" = 100, "acid" = 100)
 	heat_protection = HEAD												//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 
@@ -415,7 +415,7 @@
 	item_state = "wiz_hardsuit"
 	w_class = WEIGHT_CLASS_NORMAL
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	armor = list("melee" = 40, "bullet" = 40, "laser" = 40, "energy" = 20, "bomb" = 35, "bio" = 100, "rad" = 50, "fire" = 100, "acid" = 100)
+	armor = list("melee" = 20, "bullet" = 20, "laser" = 20, "energy" = 20, "bomb" = 25, "bio" = 100, "rad" = 50, "fire" = 100, "acid" = 100)
 	allowed = list(/obj/item/teleportation_scroll, /obj/item/tank/internals)
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS					//Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
@@ -700,7 +700,7 @@
 
 /obj/item/clothing/suit/space/hardsuit/shielded/process()
 	if(world.time > recharge_cooldown && current_charges < max_charges)
-		current_charges = CLAMP((current_charges + recharge_rate), 0, max_charges)
+		current_charges = clamp((current_charges + recharge_rate), 0, max_charges)
 		playsound(loc, 'sound/magic/charge.ogg', 50, 1)
 		if(current_charges == max_charges)
 			playsound(loc, 'sound/machines/ding.ogg', 50, 1)
@@ -827,3 +827,40 @@
 	strip_delay = 130
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
 	actions_types = list()
+
+//POWERARMORS
+//Currently are no different from normal hardsuits, except maybe for the higher armor ratings.
+
+/obj/item/clothing/head/helmet/space/hardsuit/powerarmor_t45b
+	name = "Salvaged T-45b helmet"
+	desc = "It's some barely-functional power armor helmet from a by-gone age."
+	icon_state = "hardsuit0-t45b"
+	item_state = "t45b_helm"
+	armor = list("melee" = 50, "bullet" = 48, "laser" = 25, "energy" = 25, "bomb" = 48, "bio" = 100, "rad" = 50, "fire" = 50, "acid" = 25)
+	item_color = "t45b"
+
+/obj/item/clothing/suit/space/hardsuit/powerarmor_t45b
+	name = "Salvaged T-45b power armor"
+	desc = "It's some barely-functional power armor, probably hundreds of years old."
+	icon_state = "hardsuit-t45b"
+	item_state = "t45b_hardsuit"
+	armor = list("melee" = 50, "bullet" = 48, "laser" = 25, "energy" = 25, "bomb" = 48, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 25)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/powerarmor_t45b
+	item_color = "t45b"
+
+/obj/item/clothing/head/helmet/space/hardsuit/powerarmor_advanced
+	name = "Advanced power helmet"
+	desc = "It's an advanced power armor Mk I helmet. It looks somewhat threatening."
+	icon_state = "hardsuit0-advancedpa1"
+	item_state = "advpa1_helm"
+	armor = list("melee" = 50, "bullet" = 48, "laser" = 25, "energy" = 25, "bomb" = 48, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 25)
+	item_color = "advancedpa1"
+
+/obj/item/clothing/suit/space/hardsuit/powerarmor_advanced
+	name = "Advanced power armor"
+	desc = "An advanced suit of power armor. It looks pretty impressive and threatening."
+	icon_state = "hardsuit-advancedpa1"
+	item_state = "advpa1_hardsuit"
+	armor = list("melee" = 50, "bullet" = 48, "laser" = 25, "energy" = 25, "bomb" = 48, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 25)
+	helmettype = /obj/item/clothing/head/helmet/space/hardsuit/powerarmor_advanced
+	item_color = "advancedpa1"

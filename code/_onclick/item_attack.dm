@@ -5,7 +5,11 @@
 		var/resolved = target.attackby(src, user, params)
 		if(!resolved && target && !QDELETED(src))
 			afterattack(target, user, 1, params) // 1: clicking something Adjacent
-
+	SSdemo.mark_dirty(src)
+	if(isturf(target))
+		SSdemo.mark_turf(target)
+	else
+		SSdemo.mark_dirty(target)
 
 //Checks if the item can work as a tool, calling the appropriate tool behavior on the target
 /obj/item/proc/tool_attack_chain(mob/user, atom/target)
@@ -20,6 +24,7 @@
 	if(SEND_SIGNAL(src, COMSIG_ITEM_ATTACK_SELF, user) & COMPONENT_NO_INTERACT)
 		return
 	interact(user)
+	SSdemo.mark_dirty(src)
 
 /obj/item/proc/pre_attack(atom/A, mob/living/user, params) //do stuff before attackby!
 	if(SEND_SIGNAL(src, COMSIG_ITEM_PRE_ATTACK, A, user, params) & COMPONENT_NO_ATTACK)
@@ -128,9 +133,9 @@
 /obj/item/proc/get_clamped_volume()
 	if(w_class)
 		if(force)
-			return CLAMP((force + w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
+			return clamp((force + w_class) * 4, 30, 100)// Add the item's force to its weight class and multiply by 4, then clamp the value between 30 and 100
 		else
-			return CLAMP(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
+			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
 /mob/living/proc/send_item_attack_message(obj/item/I, mob/living/user, hit_area)
 	var/message_verb = "attacked"

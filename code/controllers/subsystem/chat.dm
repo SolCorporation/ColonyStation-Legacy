@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(chat)
 			return
 
 
-/datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE)
+/datum/controller/subsystem/chat/proc/queue(target, message, handle_whitespace = TRUE, confidential = FALSE)
 	if(!target || !message)
 		return
 
@@ -37,6 +37,8 @@ SUBSYSTEM_DEF(chat)
 		message = replacetext(message, "\t", "[FOURSPACES][FOURSPACES]")
 	message += "<br>"
 
+	if(!confidential)
+		SSdemo.write_chat(target, message)
 
 	if(islist(target))
 		for(var/I in target)
@@ -49,7 +51,6 @@ SUBSYSTEM_DEF(chat)
 				C.chatOutput.messageQueue += message
 				continue
 
-			message = to_utf8(message, I) // yogs - LibVG
 			payload[C] += url_encode(url_encode(message))
 
 	else
@@ -62,5 +63,4 @@ SUBSYSTEM_DEF(chat)
 			C.chatOutput.messageQueue += message
 			return
 
-		message = to_utf8(message, target) // yogs - LibVG
 		payload[C] += url_encode(url_encode(message))

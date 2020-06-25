@@ -15,7 +15,7 @@
 	var/turf/T = get_turf(ui_host())
 	if(T)
 		var/datum/gas_mixture/environment = T.return_air()
-		var/list/env_gases = environment.get_gases()
+		var/list/env_gases = environment.gases
 		var/pressure = environment.return_pressure()
 		var/total_moles = environment.total_moles()
 		data["AirPressure"] = round(pressure,0.1)

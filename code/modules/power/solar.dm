@@ -297,6 +297,7 @@
 
 	var/obj/machinery/power/tracker/connected_tracker = null
 	var/list/connected_panels = list()
+	var/mob/living/carbon/human/last_user // The last guy to open up the console
 
 /obj/machinery/power/solar_control/Initialize()
 	. = ..()
@@ -346,6 +347,8 @@
 	if(!ui)
 		ui = new(user, src, ui_key, "SolarControl", name, 380, 230, master_ui, state)
 		ui.open()
+	if(ishuman(user))
+		last_user = user
 
 /obj/machinery/power/solar_control/ui_data()
 	var/data = list()
@@ -391,9 +394,9 @@
 		return TRUE
 	if(action == "refresh")
 		search_for_connected()
-		if(connected_tracker && track == 2)
-			connected_tracker.set_angle(SSsun.angle)
-		set_panels(currentdir)
+		if(last_user && last_user.client && connected_tracker && connected_panels.len) // If this guy finished up the solars
+			if(last_user.stat != DEAD && (last_user.mind?.assigned_role in GLOB.engineering_positions)) // and he's an engineer who isn't long-dead or adminbussing
+				SSachievements.unlock_achievement(/datum/achievement/engineering/solar, last_user.client) // Give him the achievement
 		return TRUE
 	return FALSE
 

@@ -30,6 +30,10 @@
 #define COMSIG_GLOB_MOB_DEATH "!mob_death"						//mob died somewhere : (mob , gibbed)
 #define COMSIG_GLOB_LIVING_SAY_SPECIAL "!say_special"			//global living say plug - use sparingly: (mob/speaker , message)
 
+// signals from globally accessible objects
+/// from SSsun when the sun changes position : (azimuth)
+#define COMSIG_SUN_MOVED "sun_moved"
+
 //////////////////////////////////////////////////////////////////
 
 // /datum signals
@@ -175,6 +179,7 @@
 #define COMSIG_LIVING_MINOR_SHOCK "living_minor_shock"			//sent by stuff like stunbatons and tasers: ()
 #define COMSIG_PROCESS_BORGCHARGER_OCCUPANT "living_charge"		//sent from borg recharge stations: (amount, repairs)
 #define COMSIG_MOB_CLIENT_LOGIN "comsig_mob_client_login"		//sent when a mob/login() finishes: (client)
+#define COMSIG_LIVING_LOOK_UP "living_look_up"					//from base of mob/living/look_up() (/mob/living)
 
 //ALL OF THESE DO NOT TAKE INTO ACCOUNT WHETHER AMOUNT IS 0 OR LOWER AND ARE SENT REGARDLESS!
 #define COMSIG_LIVING_STATUS_STUN "living_stun"					//from base of mob/living/Stun() (amount, update, ignore)

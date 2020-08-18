@@ -95,6 +95,8 @@ GLOBAL_LIST_INIT(keybinding_validkeys, list(
 // Mob
 #define ACTION_SAY "Say"
 #define ACTION_ME "Me"
+#define ACTION_LOOKUP "Look Up"
+
 
 #define ACTION_STOPPULLING "Stop Pulling"
 #define ACTION_INTENTRIGHT "Intent Right"
@@ -178,6 +180,8 @@ GLOBAL_LIST_INIT(keybinding_default, list(
 	ACTION_BUILDMODE = "F7",
 	ACTION_STEALTHMIN = "F8",
 	ACTION_DSAY = "F10",
+
+	ACTION_LOOKUP = "K",
 ))
 
 

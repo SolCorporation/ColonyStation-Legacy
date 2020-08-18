@@ -18,6 +18,7 @@ GLOBAL_PROTECT(admin_verbs_default)
 	/client/proc/cmd_admin_pm_context,	/*right-click adminPM interface*/
 	/client/proc/cmd_admin_pm_panel,		/*admin-pm list*/
 	/client/proc/stop_sounds,
+	/client/proc/toggle_legacy_mc_tab,
 	/client/proc/fix_air // yogs - fix air verb
 	)
 GLOBAL_LIST_INIT(admin_verbs_admin, world.AVerbsAdmin())
@@ -47,7 +48,6 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/cmd_admin_headset_message,	/*send an message to somebody through their headset as CentCom*/
 	/client/proc/cmd_admin_delete,		/*delete an instance/object/mob/etc*/
 	/client/proc/cmd_admin_check_contents,	/*displays the contents of an instance*/
-	/client/proc/centcom_podlauncher,/*Open a window to launch a Supplypod and configure it or it's contents*/
 	/client/proc/check_antagonists,		/*shows all antags*/
 	/datum/admins/proc/access_news_network,	/*allows access of newscasters*/
 	/client/proc/jumptocoord,			/*we ghost and jump to a coordinate*/
@@ -86,7 +86,11 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/subtlemessage_faction, // yogs -- SM to entire factions/antag types
 	/client/proc/nerf_or_nothing, // yogs -- Groudon's meme nerf verb
 	/client/proc/delay_shuttle, // yogs -- Allows admins to delay the shuttle from launching
-	/client/proc/queue_check // Yogs -- Some queue manipulation/debuggin kinda verbs
+	/client/proc/queue_check, // Yogs -- Some queue manipulation/debuggin kinda verbs
+	/client/proc/cmd_view_polls,
+	/client/proc/antag_token_panel, //Yogs -- Access Antag Token Panel
+	/client/proc/give_antag_token,
+	/client/proc/show_redeemable_antag_tokens
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -117,7 +121,8 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 	/client/proc/spawn_floor_cluwne, // Yogs
 	/client/proc/rejuv_all, // yogs - Revive All
 	/client/proc/admin_vox, // yogs - Admin AI Vox
-	/client/proc/admin_away
+	/client/proc/admin_away,
+	/client/proc/centcom_podlauncher/*Open a window to launch a Supplypod and configure it or it's contents*/
 	))
 GLOBAL_PROTECT(admin_verbs_fun)
 GLOBAL_LIST_INIT(admin_verbs_spawn, list(/datum/admins/proc/spawn_atom, /datum/admins/proc/podspawn_atom, /datum/admins/proc/spawn_cargo, /datum/admins/proc/spawn_objasmob, /client/proc/respawn_character, /datum/admins/proc/beaker_panel))
@@ -420,6 +425,31 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	holder.unban_panel()
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Unbanning Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
+/client/proc/antag_token_panel()
+	set name = "Antag Token Panel"
+	set category = "Admin"
+	if(!check_rights(R_ADMIN))
+		return
+	holder.antag_token_panel()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Antag Token Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/show_redeemable_antag_tokens()
+	set name = "Redeemable Antag Tokens"
+	set category = "Admin"
+	if(!check_rights(R_ADMIN))
+		return
+	holder.show_redeemable_antag_tokens()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Antag Token Redeemable Panel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/client/proc/give_antag_token()
+	set name = "Give Antag Token"
+	set category = "Admin"
+	if(!check_rights(R_ADMIN))
+		return
+	holder.give_antag_token()
+	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Antag Token") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+
 /client/proc/game_panel()
 	set name = "Game Panel"
 	set category = "Admin"
@@ -664,6 +694,17 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	log_admin("[src] deadmined themself.")
 	message_admins("[src] deadmined themself.")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Deadmin")
+
+
+/client/proc/toggle_legacy_mc_tab()
+	set name = "Toggle Legacy MC Tab"
+	set category = "Debug"
+	set desc = "For if the normal one breaks"
+
+	if(!holder)
+		return
+
+	holder.legacy_mc = !holder.legacy_mc
 
 /client/proc/readmin()
 	set name = "Readmin"

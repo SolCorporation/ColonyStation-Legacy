@@ -1164,8 +1164,10 @@
 		A.action.Remove(src)
 
 /mob/living/proc/add_abilities_to_panel()
+	var/list/L = list()
 	for(var/obj/effect/proc_holder/A in abilities)
-		statpanel("[A.panel]",A.get_panel_text(),A)
+		L[++L.len] = list("[A.panel]",A.get_panel_text(),A.name,"\ref[A]")
+	return L
 
 /mob/living/lingcheck()
 	if(mind)
@@ -1300,3 +1302,36 @@
 			update_transform()
 		if("lighting_alpha")
 			sync_lighting_plane_alpha()
+
+///Checks if the user is incapacitated or on cooldown.
+/mob/living/proc/can_look_up()
+	return !((next_move > world.time) || incapacitated(ignore_restraints = TRUE))
+
+/**
+ * look_up Changes the perspective of the mob to any openspace turf above the mob
+ *
+ * This also checks if an openspace turf is above the mob before looking up or resets the perspective if already looking up
+ *
+ */
+/mob/living/proc/look_up()
+
+	if(client.perspective != MOB_PERSPECTIVE) //We are already looking up.
+		stop_look_up()
+		return
+	if(!can_look_up())
+		return
+	var/turf/ceiling = get_step_multiz(src, UP)
+	if(!ceiling) //We are at the highest z-level.
+		to_chat(src, "<span class='warning'>You can't see through the ceiling above you.</span>")
+		return
+	else if(!istransparentturf(ceiling)) //There is no turf we can look through above us
+		to_chat(src, "<span class='warning'>You can't see through the floor above you.</span>")
+		return
+
+	changeNext_move(CLICK_CD_LOOK_UP)
+	reset_perspective(ceiling)
+	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, .proc/stop_look_up) //We stop looking up if we move.
+
+/mob/living/proc/stop_look_up()
+	reset_perspective()
+	UnregisterSignal(src, COMSIG_MOVABLE_PRE_MOVE)

@@ -143,11 +143,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/proc/ShowChoices(mob/user)
 	if(!user || !user.client)
 		return
-	
+
 	if(!SSjob || (SSjob.occupations.len <= 0))
 		to_chat(user, "<span class='notice'>The job SSticker is not yet finished creating jobs, please try again later</span>")
 		return
-	
+
 	update_preview_icon()
 	var/list/dat = list("<center>")
 
@@ -716,6 +716,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 				BUTTON_KEY("Use item on self", ACTION_USESELF)
 				BUTTON_KEY("Drop", ACTION_DROP)
 				BUTTON_KEY("Equip", ACTION_EQUIP)
+				BUTTON_KEY("Look Up", ACTION_LOOKUP)
 
 				dat += "</td><td width='300px' height='300px' valign='top'>"
 

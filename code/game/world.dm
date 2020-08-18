@@ -2,10 +2,21 @@
 
 GLOBAL_VAR(restart_counter)
 
+/world/proc/enable_debugger()
+    var/dll = (fexists(EXTOOLS) && EXTOOLS)
+    if (dll)
+        call(dll, "debug_initialize")()
+
 //This happens after the Master subsystem new(s) (it's a global datum)
 //So subsystems globals exist, but are not initialised
 /world/New()
+	
+	//Early profile for auto-profiler - will be stopped on profiler init if necessary.
+#if DM_VERSION >= 513 && DM_BUILD >= 1506
+	world.Profile(PROFILE_START)
+#endif
 
+	enable_debugger() //This does nothing if you aren't trying to debug
 	log_world("World loaded at [time_stamp()]!")
 
 	SetupExternalRSC()
@@ -125,6 +136,8 @@ GLOBAL_VAR(restart_counter)
 	GLOB.world_job_debug_log = "[GLOB.log_directory]/job_debug.log"
 	GLOB.world_paper_log = "[GLOB.log_directory]/paper.log"
 	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
+
+	GLOB.demo_log = "[GLOB.log_directory]/demo.txt"
 
 #ifdef UNIT_TESTS
 	GLOB.test_log = file("[GLOB.log_directory]/tests.log")

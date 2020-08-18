@@ -1235,8 +1235,9 @@
 	sleep(1)
 	set_opacity(0)
 	update_freelook_sight()
-	sleep(4)
+	sleep(1)
 	density = FALSE
+	sleep(3)
 	air_update_turf(1)
 	sleep(1)
 	layer = OPEN_DOOR_LAYER
@@ -1278,9 +1279,9 @@
 	update_icon(AIRLOCK_CLOSING, 1)
 	layer = CLOSED_DOOR_LAYER
 	if(air_tight)
-		density = TRUE
 		air_update_turf(1)
 	sleep(1)
+	density = TRUE
 	if(!air_tight)
 		density = TRUE
 		air_update_turf(1)
@@ -1555,7 +1556,7 @@
 													datum/tgui/master_ui = null, datum/ui_state/state = GLOB.default_state)
 	SStgui.try_update_ui(user, src, ui_key, ui, force_open)
 	if(!ui)
-		ui = new(user, src, ui_key, "ai_airlock", name, 500, 390, master_ui, state)
+		ui = new(user, src, ui_key, "AiAirlock", name, 500, 390, master_ui, state)
 		ui.open()
 	return TRUE
 
